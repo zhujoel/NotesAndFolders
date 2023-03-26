@@ -9,19 +9,17 @@ package com.example.notesandfolders.presentation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.wear.compose.material.MaterialTheme
-import androidx.wear.compose.material.Text
+import androidx.compose.ui.unit.dp
+import androidx.wear.compose.material.*
 import com.example.notesandfolders.R
 import com.example.notesandfolders.presentation.theme.NotesAndFoldersTheme
 
@@ -37,32 +35,48 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun WearApp(greetingName: String) {
     NotesAndFoldersTheme {
-        /* If you have enough items in your list, use [ScalingLazyColumn] which is an optimized
-         * version of LazyColumn for wear devices with some added features. For more information,
-         * see d.android.com/wear/compose.
-         */
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colors.background),
-            verticalArrangement = Arrangement.Center
+        val listState = rememberScalingLazyListState()
+
+        Scaffold(
+            timeText = { TimeText(modifier = Modifier.scrollAway(listState)) },
+            vignette = { Vignette(vignettePosition = VignettePosition.TopAndBottom) },
+            positionIndicator = { PositionIndicator(scalingLazyListState = listState) },
         ) {
-            Greeting(greetingName = greetingName)
+            val contentModifier = Modifier.fillMaxWidth()
+            val iconModifier = Modifier
+                .size(24.dp)
+                .wrapContentSize(align = Alignment.Center)
+
+            ScalingLazyColumn(
+                modifier = contentModifier,
+                state = listState,
+                autoCentering = AutoCenteringParams(itemIndex = 0)
+            ) {
+                item {
+                    Text(
+                        modifier = contentModifier,
+                        textAlign = TextAlign.Center,
+                        color = MaterialTheme.colors.primary,
+                        text = stringResource(R.string.hello_world, greetingName)
+                    )
+                }
+                item { NoteCard(contentModifier, iconModifier) }
+
+                item { CreateNoteButton(contentModifier, iconModifier) }
+            }
         }
+
     }
 }
 
-@Composable
-fun Greeting(greetingName: String) {
-    Text(
-        modifier = Modifier.fillMaxWidth(),
-        textAlign = TextAlign.Center,
-        color = MaterialTheme.colors.primary,
-        text = stringResource(R.string.hello_world, greetingName)
-    )
-}
-
-@Preview(device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
+@Preview(
+    widthDp = WEAR_PREVIEW_DEVICE_WIDTH_DP,
+    heightDp = WEAR_PREVIEW_DEVICE_HEIGHT_DP,
+    apiLevel = WEAR_PREVIEW_API_LEVEL,
+    uiMode = WEAR_PREVIEW_UI_MODE,
+    backgroundColor = WEAR_PREVIEW_BACKGROUND_COLOR_BLACK,
+    showBackground = WEAR_PREVIEW_SHOW_BACKGROUND
+)
 @Composable
 fun DefaultPreview() {
     WearApp("Preview Android")
