@@ -1,39 +1,45 @@
-/* While this template provides a good starting point for using Wear Compose, you can always
- * take a look at https://github.com/android/wear-os-samples/tree/main/ComposeStarter and
- * https://github.com/android/wear-os-samples/tree/main/ComposeAdvanced to find the most up to date
- * changes to the libraries and their usages.
- */
-
 package com.example.notesandfolders.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import androidx.wear.compose.material.*
-import com.example.notesandfolders.R
+import androidx.wear.compose.navigation.SwipeDismissableNavHost
+import androidx.wear.compose.navigation.composable
+import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
+import com.example.notesandfolders.presentation.navigation.LandingScreen
+import com.example.notesandfolders.presentation.navigation.NoteScreen
+import com.example.notesandfolders.presentation.navigation.Screen
 import com.example.notesandfolders.presentation.theme.NotesAndFoldersTheme
 
 class MainActivity : ComponentActivity() {
+    internal lateinit var navController: NavHostController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            WearApp("Android")
+            /*
+            val contentModifier = Modifier.fillMaxWidth()
+            val iconModifier = Modifier
+                .size(24.dp)
+                .wrapContentSize(align = Alignment.Center)
+            */
+            navController = rememberSwipeDismissableNavController()
+
+            WearApp(swipeDismissableNavController = navController)
         }
     }
 }
 
 @Composable
-fun WearApp(greetingName: String) {
+fun WearApp(
+    modifier: Modifier = Modifier,
+    iconModifier: Modifier = Modifier,
+    swipeDismissableNavController: NavHostController = rememberSwipeDismissableNavController()
+) {
     NotesAndFoldersTheme {
         val listState = rememberScalingLazyListState()
 
@@ -42,42 +48,25 @@ fun WearApp(greetingName: String) {
             vignette = { Vignette(vignettePosition = VignettePosition.TopAndBottom) },
             positionIndicator = { PositionIndicator(scalingLazyListState = listState) },
         ) {
-            val contentModifier = Modifier.fillMaxWidth()
-            val iconModifier = Modifier
-                .size(24.dp)
-                .wrapContentSize(align = Alignment.Center)
-
-            ScalingLazyColumn(
-                modifier = contentModifier,
-                state = listState,
-                autoCentering = AutoCenteringParams(itemIndex = 0)
+            SwipeDismissableNavHost(
+                navController = swipeDismissableNavController,
+                startDestination = Screen.Landing.route
             ) {
-                item {
-                    Text(
-                        modifier = contentModifier,
-                        textAlign = TextAlign.Center,
-                        color = MaterialTheme.colors.primary,
-                        text = stringResource(R.string.hello_world, greetingName)
-                    )
+                // Main Window
+                composable(
+                    route = Screen.Landing.route
+                ) {
+                    LandingScreen(
+                        modifier,
+                        iconModifier,
+                        swipeDismissableNavController)
                 }
-                item { NoteCard(contentModifier, iconModifier) }
 
-                item { CreateNoteButton(contentModifier, iconModifier) }
+                composable(Screen.Note.route) {
+                    NoteScreen()
+                }
             }
         }
 
     }
-}
-
-@Preview(
-    widthDp = WEAR_PREVIEW_DEVICE_WIDTH_DP,
-    heightDp = WEAR_PREVIEW_DEVICE_HEIGHT_DP,
-    apiLevel = WEAR_PREVIEW_API_LEVEL,
-    uiMode = WEAR_PREVIEW_UI_MODE,
-    backgroundColor = WEAR_PREVIEW_BACKGROUND_COLOR_BLACK,
-    showBackground = WEAR_PREVIEW_SHOW_BACKGROUND
-)
-@Composable
-fun DefaultPreview() {
-    WearApp("Preview Android")
 }

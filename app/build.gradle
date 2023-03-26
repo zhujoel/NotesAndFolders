@@ -58,9 +58,9 @@ dependencies {
     // Foundation is additive, so you can use the mobile version in your Wear OS app.
     implementation "androidx.wear.compose:compose-foundation:$wear_compose_version"
 
-    // If you are using Compose Navigation, use the Wear OS version (NOT the
-    // androidx.navigation:navigation-compose version), that is, uncomment the line below.
-    // implementation "androidx.wear.compose:compose-navigation:$wear_compose_version"
+    // Navigation
+    implementation 'androidx.navigation:navigation-runtime-ktx:2.4.1'
+    implementation 'androidx.wear.compose:compose-navigation:1.1.2'
 
     // Testing
     testImplementation "junit:junit:$junit_version"
