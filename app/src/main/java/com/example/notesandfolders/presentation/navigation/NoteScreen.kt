@@ -26,8 +26,7 @@ fun NoteScreen(
     noteId: String
 ) {
     var preferences = PreferenceManager.getDefaultSharedPreferences(context)
-    val inputTextKey = "input_text"
-    var notePreference = preferences.getString(inputTextKey, "valueDefault")
+    var notePreference = preferences.getString(noteId, "valueDefault")
 
     val launcher =
         rememberLauncherForActivityResult(
@@ -35,9 +34,9 @@ fun NoteScreen(
         ) {
             it.data?.let { data ->
                 val results: Bundle = RemoteInput.getResultsFromIntent(data)
-                val newInputText: CharSequence? = results.getCharSequence(inputTextKey)
+                val newInputText: CharSequence? = results.getCharSequence(noteId)
                 var preferenceEditor = preferences.edit()
-                preferenceEditor.putString(inputTextKey, newInputText as String)
+                preferenceEditor.putString(noteId, newInputText as String)
                 preferenceEditor.commit()
             }
         }
@@ -53,7 +52,7 @@ fun NoteScreen(
         item {
             val intent: Intent = RemoteInputIntentHelper.createActionRemoteInputIntent()
             val remoteInputs: List<RemoteInput> = listOf(
-                RemoteInput.Builder(inputTextKey)
+                RemoteInput.Builder(noteId)
                     .setLabel("Enter your note")
                     .wearableExtender {
                         setEmojisAllowed(false)

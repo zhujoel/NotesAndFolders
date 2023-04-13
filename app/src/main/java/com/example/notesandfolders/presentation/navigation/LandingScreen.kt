@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.wear.compose.material.*
 import com.example.notesandfolders.presentation.CreateNoteButton
 import com.example.notesandfolders.presentation.NoteCard
+import java.util.*
 
 @Composable
 fun LandingScreen(
@@ -25,7 +26,8 @@ fun LandingScreen(
         item {
             Chip(
                 onClick = {
-                    swipeDismissibleNavController.navigate(Screen.Note.route + "/myNoteId")
+                    var noteId = UUID.randomUUID().toString()
+                    swipeDismissibleNavController.navigate(Screen.Note.route + "/$noteId")
                 },
                 label = {
                     Text(
