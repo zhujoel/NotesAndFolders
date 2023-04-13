@@ -61,6 +61,10 @@ dependencies {
     // Navigation
     implementation 'androidx.navigation:navigation-runtime-ktx:2.4.1'
     implementation 'androidx.wear.compose:compose-navigation:1.1.2'
+    implementation 'androidx.wear:wear-input:1.1.0'
+
+    // Storage
+    implementation 'androidx.preference:preference:1.2.0'
 
     // Testing
     testImplementation "junit:junit:$junit_version"

@@ -1,5 +1,6 @@
 package com.example.notesandfolders.presentation
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -20,6 +21,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        var context = applicationContext
         setContent {
             /*
             val contentModifier = Modifier.fillMaxWidth()
@@ -29,13 +31,14 @@ class MainActivity : ComponentActivity() {
             */
             navController = rememberSwipeDismissableNavController()
 
-            WearApp(swipeDismissableNavController = navController)
+            WearApp(context, swipeDismissableNavController = navController)
         }
     }
 }
 
 @Composable
 fun WearApp(
+    context: Context,
     modifier: Modifier = Modifier,
     iconModifier: Modifier = Modifier,
     swipeDismissableNavController: NavHostController = rememberSwipeDismissableNavController()
@@ -63,7 +66,7 @@ fun WearApp(
                 }
 
                 composable(Screen.Note.route) {
-                    NoteScreen()
+                    NoteScreen(context)
                 }
             }
         }
