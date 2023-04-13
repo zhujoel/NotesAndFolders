@@ -13,6 +13,7 @@ import androidx.wear.compose.material.*
 import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
+import com.example.notesandfolders.presentation.navigation.FolderScreen
 import com.example.notesandfolders.presentation.navigation.LandingScreen
 import com.example.notesandfolders.presentation.navigation.NoteScreen
 import com.example.notesandfolders.presentation.navigation.Screen
@@ -67,6 +68,21 @@ fun WearApp(
                         swipeDismissableNavController)
                 }
 
+                // Folder Screen
+                composable(
+                    route = Screen.Folder.route + "/{folderId}",
+                    arguments = listOf(
+                        navArgument("folderId") {
+                            type = NavType.StringType
+                            nullable = false
+                        }
+                    )
+                ) {
+                    entry ->
+                        FolderScreen(context, modifier, entry.arguments?.getString("folderId")!!, swipeDismissableNavController)
+                }
+
+                // Note Screen
                 composable(
                     route = Screen.Note.route + "/{noteId}",
                     arguments = listOf(
@@ -81,6 +97,5 @@ fun WearApp(
                 }
             }
         }
-
     }
 }

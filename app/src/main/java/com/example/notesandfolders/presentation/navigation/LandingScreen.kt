@@ -26,12 +26,12 @@ fun LandingScreen(
         item {
             Chip(
                 onClick = {
-                    var noteId = UUID.randomUUID().toString()
-                    swipeDismissibleNavController.navigate(Screen.Note.route + "/$noteId")
+                    var folderId = UUID.randomUUID().toString()
+                    swipeDismissibleNavController.navigate(Screen.Folder.route + "/$folderId")
                 },
                 label = {
                     Text(
-                        text = "Check note",
+                        text = "Check folders",
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )

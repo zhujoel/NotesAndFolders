@@ -8,4 +8,5 @@ sealed class Screen (
 ){
     object Landing : Screen("landing")
     object Note : Screen("Note")
+    object Folder : Screen("Folder")
 }

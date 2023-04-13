@@ -25,60 +25,11 @@ fun NoteScreen(
     modifier: Modifier = Modifier,
     noteId: String
 ) {
-    var preferences = PreferenceManager.getDefaultSharedPreferences(context)
-    var notePreference = preferences.getString(noteId, "valueDefault")
-
-    val launcher =
-        rememberLauncherForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) {
-            it.data?.let { data ->
-                val results: Bundle = RemoteInput.getResultsFromIntent(data)
-                val newInputText: CharSequence? = results.getCharSequence(noteId)
-                var preferenceEditor = preferences.edit()
-                preferenceEditor.putString(noteId, newInputText as String)
-                preferenceEditor.commit()
-            }
-        }
-
     ScalingLazyColumn(modifier = modifier){
         item {
             Text(
                 textAlign = TextAlign.Center,
                 text = "You are now in the note screen, $noteId",
-            )
-        }
-
-        item {
-            val intent: Intent = RemoteInputIntentHelper.createActionRemoteInputIntent()
-            val remoteInputs: List<RemoteInput> = listOf(
-                RemoteInput.Builder(noteId)
-                    .setLabel("Enter your note")
-                    .wearableExtender {
-                        setEmojisAllowed(false)
-                        setInputActionType(EditorInfo.IME_ACTION_DONE)
-                    }.build()
-            )
-
-            RemoteInputIntentHelper.putRemoteInputsExtra(intent, remoteInputs)
-
-            Chip(
-                onClick = {
-                    launcher.launch(intent)
-                },
-                label = {
-                    Text(
-                        "Note header",
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                },
-                secondaryLabel = {
-                    Text(
-                        text = notePreference ?: ""
-                    )
-                },
-                modifier = Modifier.fillMaxWidth()
             )
         }
     }
