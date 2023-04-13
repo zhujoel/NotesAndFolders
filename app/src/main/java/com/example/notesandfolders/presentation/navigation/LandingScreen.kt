@@ -24,7 +24,9 @@ fun LandingScreen(
         item { CreateNoteButton(modifier, iconModifier) }
         item {
             Chip(
-                onClick = { swipeDismissibleNavController.navigate(Screen.Note.route) },
+                onClick = {
+                    swipeDismissibleNavController.navigate(Screen.Note.route + "/myNoteId")
+                },
                 label = {
                     Text(
                         text = "Check note",

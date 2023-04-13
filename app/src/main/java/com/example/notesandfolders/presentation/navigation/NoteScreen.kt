@@ -22,7 +22,8 @@ import com.example.notesandfolders.presentation.wearableExtender
 @Composable
 fun NoteScreen(
     context: Context,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    noteId: String
 ) {
     var preferences = PreferenceManager.getDefaultSharedPreferences(context)
     val inputTextKey = "input_text"
@@ -45,7 +46,7 @@ fun NoteScreen(
         item {
             Text(
                 textAlign = TextAlign.Center,
-                text = "You are now in the note screen",
+                text = "You are now in the note screen, $noteId",
             )
         }
 

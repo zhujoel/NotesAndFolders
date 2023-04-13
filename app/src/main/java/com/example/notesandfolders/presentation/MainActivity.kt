@@ -7,6 +7,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import androidx.wear.compose.material.*
 import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
@@ -65,8 +67,17 @@ fun WearApp(
                         swipeDismissableNavController)
                 }
 
-                composable(Screen.Note.route) {
-                    NoteScreen(context)
+                composable(
+                    route = Screen.Note.route + "/{noteId}",
+                    arguments = listOf(
+                        navArgument("noteId") {
+                            type = NavType.StringType
+                            nullable = false
+                        }
+                    )
+                ) {
+                    entry ->
+                        NoteScreen(context, modifier, entry.arguments?.getString("noteId")!!)
                 }
             }
         }
