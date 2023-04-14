@@ -10,7 +10,9 @@ import androidx.preference.PreferenceManager
 import androidx.wear.compose.material.*
 import com.example.notesandfolders.R
 import com.example.notesandfolders.presentation.*
-import java.util.*
+import java.util.UUID
+import java.util.HashSet
+
 
 @Composable
 fun LandingScreen(
@@ -20,7 +22,7 @@ fun LandingScreen(
     context: Context
 ) {
     var preferences = PreferenceManager.getDefaultSharedPreferences(context)
-    var folderContent = preferences.getStringSet(stringResource(R.string.landing_screen_id), HashSet())
+    var folders = preferences.getStringSet(stringResource(R.string.landing_screen_id), HashSet<String>())
 
     val listState = rememberScalingLazyListState()
     ScalingLazyColumn(
@@ -47,6 +49,9 @@ fun LandingScreen(
                 },
                 modifier = modifier
             )
+        }
+        for(folder in folders ?: HashSet()){
+            item { FolderCard(modifier, iconModifier) }
         }
     }
 }

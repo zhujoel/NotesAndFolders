@@ -55,8 +55,10 @@ fun CreateFolderButton(
                 val results: Bundle = RemoteInput.getResultsFromIntent(data)
                 val newInputText: CharSequence? = results.getCharSequence(inputTextKey)
                 var preferenceEditor = preferences.edit()
-                folderContent?.add(newInputText as String)
-                preferenceEditor.putStringSet(inputTextKey, folderContent)
+                var foldersClone = HashSet<String>(folderContent)
+                foldersClone.add(newInputText as String)
+                preferenceEditor.putStringSet(folderId, foldersClone)
+                preferenceEditor.putString("1", newInputText)
                 preferenceEditor.commit()
             }
         }
