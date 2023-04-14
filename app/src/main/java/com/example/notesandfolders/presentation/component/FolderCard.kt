@@ -20,7 +20,7 @@ fun FolderCard(
     swipeDismissibleNavController: NavHostController,
 ) {
     var preferences = PreferenceManager.getDefaultSharedPreferences(context)
-    var folderTitle = preferences.getString(folderId, "Folder") ?: "Folder"
+    var folderTitle = preferences.getString("title_$folderId", "Folder") ?: "Folder"
 
     CompactChip(
         onClick = {

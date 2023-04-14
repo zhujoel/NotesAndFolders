@@ -8,6 +8,12 @@ import androidx.navigation.NavHostController
 import androidx.preference.PreferenceManager
 import java.util.HashSet
 
+fun String.asFolderContentId(): String{
+    return "folder_content_$this"
+}
+fun String.asFolderTitleId(): String{
+    return "folder_title_$this"
+}
 
 @Composable
 fun FolderContent(
@@ -18,18 +24,18 @@ fun FolderContent(
     swipeDismissibleNavController: NavHostController,
 ) {
     var preferences = PreferenceManager.getDefaultSharedPreferences(context)
-    var documentsId = preferences.getStringSet(folderId, HashSet()) ?: HashSet()
+    var documentsId = preferences.getStringSet(folderId.asFolderContentId(), HashSet()) ?: HashSet()
 
-    Column(modifier = modifier){
-        for(id in documentsId){
-            if (id.startsWith("folder_")){
+    Column(modifier = modifier) {
+        for (id in documentsId) {
+            if (id.startsWith("folder_")) {
                 FolderCard(context, modifier, iconModifier, id, swipeDismissibleNavController)
-            }
-            else if (id.startsWith("note_")) {
+            } else if (id.startsWith("note_")) {
                 NoteCard(context, modifier, iconModifier, id)
             }
         }
 
         CreateNoteButton(context, modifier, iconModifier, folderId)
         CreateFolderButton(context, modifier, iconModifier, folderId)
+    }
 }

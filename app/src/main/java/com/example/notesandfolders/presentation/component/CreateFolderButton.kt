@@ -33,8 +33,7 @@ fun CreateFolderButton(
     folderId: String, // Folder to create the folder into
 ) {
     var preferences = PreferenceManager.getDefaultSharedPreferences(context)
-    var folderContentId = "folder_content_$folderId"
-    var folderContent = preferences.getStringSet(folderContentId, HashSet<String>())
+    var folderContent = preferences.getStringSet(folderId.asFolderContentId(), HashSet<String>())
     var foldersClone = HashSet<String>(folderContent)
     var inputTextKey = "input-key"
     val launcher =
@@ -46,12 +45,10 @@ fun CreateFolderButton(
                 val newInputText: CharSequence? = results.getCharSequence(inputTextKey)
                 var preferenceEditor = preferences.edit()
                 var subFolderId = UUID.randomUUID().toString()
-                var subFolderContentId = "folder_content_$subFolderId"
-                foldersClone.add(subFolderContentId)
-                preferenceEditor.putStringSet(folderContentId, foldersClone)
-                preferenceEditor.putStringSet(subFolderContentId, HashSet())
-                var subFolderTitleId = "folder_title_$subFolderId"
-                preferenceEditor.putString(subFolderTitleId, newInputText as String)
+                foldersClone.add("folder_$subFolderId")
+                preferenceEditor.putStringSet(folderId.asFolderContentId(), foldersClone)
+                preferenceEditor.putStringSet(subFolderId.asFolderContentId(), HashSet())
+                preferenceEditor.putString("title_folder_$subFolderId", newInputText as String)
                 preferenceEditor.apply()
             }
         }

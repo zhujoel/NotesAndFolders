@@ -38,7 +38,7 @@ fun CreateNoteButton(
     folderId: String, // Folder to create the folder into
 ) {
     var preferences = PreferenceManager.getDefaultSharedPreferences(context)
-    var folderContent = preferences.getStringSetAsCopy(folderId, HashSet<String>())
+    var folderContent = preferences.getStringSetAsCopy(folderId.asFolderContentId(), HashSet<String>())
     var inputTextKey = "input-key"
     val launcher =
         rememberLauncherForActivityResult(
@@ -50,7 +50,7 @@ fun CreateNoteButton(
                 var preferenceEditor = preferences.edit()
                 var noteId = "note_"+ UUID.randomUUID().toString()
                 folderContent.add(noteId)
-                preferenceEditor.putStringSet(folderId, folderContent)
+                preferenceEditor.putStringSet(folderId.asFolderContentId(), folderContent)
                 preferenceEditor.putString(noteId, newInputText as String)
                 preferenceEditor.commit()
             }
