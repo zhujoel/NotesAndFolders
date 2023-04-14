@@ -6,12 +6,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.navigation.NavHostController
-import androidx.preference.PreferenceManager
 import androidx.wear.compose.material.*
 import com.example.notesandfolders.R
 import com.example.notesandfolders.presentation.*
+import com.example.notesandfolders.presentation.component.CreateFolderButton
+import com.example.notesandfolders.presentation.component.CreateNoteButton
+import com.example.notesandfolders.presentation.component.FolderContent
 import java.util.UUID
-import java.util.HashSet
 
 
 @Composable
@@ -21,19 +22,12 @@ fun LandingScreen(
     swipeDismissibleNavController: NavHostController,
     context: Context
 ) {
-    var preferences = PreferenceManager.getDefaultSharedPreferences(context)
-    var folders = preferences.getStringSet(stringResource(R.string.landing_screen_id), HashSet<String>())
-
     val listState = rememberScalingLazyListState()
     ScalingLazyColumn(
         modifier = modifier,
         state = listState,
         autoCentering = AutoCenteringParams(itemIndex = 0)
     ) {
-        item { NoteCard(modifier, iconModifier) }
-        item { FolderCard(modifier, iconModifier) }
-        item { CreateNoteButton(modifier, iconModifier) }
-        item { CreateFolderButton(context, modifier, iconModifier, stringResource(R.string.landing_screen_id)) }
         item {
             Chip(
                 onClick = {
@@ -50,8 +44,8 @@ fun LandingScreen(
                 modifier = modifier
             )
         }
-        for(folder in folders ?: HashSet()){
-            item { FolderCard(modifier, iconModifier) }
-        }
+        item { FolderContent(context, modifier, iconModifier, stringResource(R.string.landing_screen_id)) }
+        item { CreateNoteButton(modifier, iconModifier) }
+        item { CreateFolderButton(context, modifier, iconModifier, stringResource(R.string.landing_screen_id)) }
     }
 }
