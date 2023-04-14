@@ -45,7 +45,7 @@ fun LandingScreen(
             )
         }
         item { FolderContent(context, modifier, iconModifier, stringResource(R.string.landing_screen_id)) }
-        item { CreateNoteButton(modifier, iconModifier) }
+        item { CreateNoteButton(context, modifier, iconModifier, stringResource(R.string.landing_screen_id)) }
         item { CreateFolderButton(context, modifier, iconModifier, stringResource(R.string.landing_screen_id)) }
     }
 }

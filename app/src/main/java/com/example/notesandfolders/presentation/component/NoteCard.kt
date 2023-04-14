@@ -20,6 +20,7 @@ fun NoteCard(
     var preferences = PreferenceManager.getDefaultSharedPreferences(context)
     var noteContent = preferences.getString(noteId, "") ?: ""
 
+
     AppCard(
         modifier = modifier,
         appImage = {

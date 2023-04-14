@@ -2,7 +2,9 @@ package com.example.notesandfolders.presentation.component
 
 import android.app.RemoteInput
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.view.inputmethod.EditorInfo
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
@@ -17,8 +19,9 @@ import androidx.preference.PreferenceManager
 import androidx.wear.compose.material.Chip
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.Text
+import androidx.wear.input.RemoteInputIntentHelper
 import com.example.notesandfolders.R
-import com.example.notesandfolders.presentation.helpers.getInputIntent
+import com.example.notesandfolders.presentation.wearableExtender
 import java.util.*
 import kotlin.collections.HashSet
 
@@ -31,7 +34,7 @@ fun CreateFolderButton(
 ) {
     var preferences = PreferenceManager.getDefaultSharedPreferences(context)
     var folderContent = preferences.getStringSet(folderId, HashSet<String>())
-    var inputTextKey = "folder-title-key"
+    var inputTextKey = "input-key"
     val launcher =
         rememberLauncherForActivityResult(
             ActivityResultContracts.StartActivityForResult()
@@ -49,7 +52,16 @@ fun CreateFolderButton(
             }
         }
 
-    var intent = getInputIntent()
+    val intent: Intent = RemoteInputIntentHelper.createActionRemoteInputIntent()
+    val remoteInputs: List<RemoteInput> = listOf(
+        RemoteInput.Builder(inputTextKey)
+            .setLabel("Enter your folder name")
+            .wearableExtender {
+                setEmojisAllowed(false)
+                setInputActionType(EditorInfo.IME_ACTION_DONE)
+            }.build()
+    )
+    RemoteInputIntentHelper.putRemoteInputsExtra(intent, remoteInputs)
 
     Row(
         modifier = modifier,
