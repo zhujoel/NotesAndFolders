@@ -65,7 +65,8 @@ fun WearApp(
                     LandingScreen(
                         modifier,
                         iconModifier,
-                        swipeDismissableNavController)
+                        swipeDismissableNavController,
+                        context)
                 }
 
                 // Folder Screen

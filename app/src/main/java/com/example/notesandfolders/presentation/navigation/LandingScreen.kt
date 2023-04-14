@@ -1,10 +1,12 @@
 package com.example.notesandfolders.presentation.navigation
 
+import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.navigation.NavHostController
 import androidx.wear.compose.material.*
+import com.example.notesandfolders.presentation.CreateFolderButton
 import com.example.notesandfolders.presentation.CreateNoteButton
 import com.example.notesandfolders.presentation.NoteCard
 import java.util.*
@@ -13,7 +15,8 @@ import java.util.*
 fun LandingScreen(
     modifier: Modifier = Modifier,
     iconModifier: Modifier = Modifier,
-    swipeDismissibleNavController: NavHostController
+    swipeDismissibleNavController: NavHostController,
+    context: Context
 ) {
     val listState = rememberScalingLazyListState()
     ScalingLazyColumn(
@@ -23,6 +26,7 @@ fun LandingScreen(
     ) {
         item { NoteCard(modifier, iconModifier) }
         item { CreateNoteButton(modifier, iconModifier) }
+        item { CreateFolderButton(context, modifier, iconModifier, "landing") }
         item {
             Chip(
                 onClick = {
