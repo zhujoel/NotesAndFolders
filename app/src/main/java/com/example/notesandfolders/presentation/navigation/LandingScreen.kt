@@ -44,8 +44,6 @@ fun LandingScreen(
                 modifier = modifier
             )
         }
-        item { FolderContent(context, modifier, iconModifier, stringResource(R.string.landing_screen_id)) }
-        item { CreateNoteButton(context, modifier, iconModifier, stringResource(R.string.landing_screen_id)) }
-        item { CreateFolderButton(context, modifier, iconModifier, stringResource(R.string.landing_screen_id)) }
+        item { FolderContent(context, modifier, iconModifier, stringResource(R.string.landing_screen_id), swipeDismissibleNavController) }
     }
 }

@@ -80,7 +80,7 @@ fun WearApp(
                     )
                 ) {
                     entry ->
-                        FolderScreen(context, modifier, entry.arguments?.getString("folderId")!!, swipeDismissableNavController)
+                        FolderScreen(context, modifier, iconModifier, entry.arguments?.getString("folderId")!!, swipeDismissableNavController)
                 }
 
                 // Note Screen

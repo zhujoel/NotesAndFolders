@@ -7,44 +7,26 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.navigation.NavHostController
 import androidx.preference.PreferenceManager
-import androidx.wear.compose.material.Chip
-import androidx.wear.compose.material.ScalingLazyColumn
-import androidx.wear.compose.material.Text
+import androidx.wear.compose.material.*
+import com.example.notesandfolders.presentation.component.FolderContent
 import java.util.*
 
 @Composable
 fun FolderScreen(
     context: Context,
     modifier: Modifier = Modifier,
+    iconModifier: Modifier = Modifier,
     folderId: String,
     swipeDismissibleNavController: NavHostController
 ) {
-    var preferences = PreferenceManager.getDefaultSharedPreferences(context)
-
-
-    ScalingLazyColumn(modifier = modifier){
+    val listState = rememberScalingLazyListState()
+    ScalingLazyColumn(
+        modifier = modifier,
+        state = listState,
+        autoCentering = AutoCenteringParams(itemIndex = 0)
+    ) {
         item {
-            Text(
-                textAlign = TextAlign.Center,
-                text = "You are now in the folder screen, $folderId",
-            )
-        }
-
-        item {
-            Chip(
-                onClick = {
-                    var noteId = UUID.randomUUID().toString()
-                    swipeDismissibleNavController.navigate(Screen.Note.route + "/$noteId")
-                },
-                label = {
-                    Text(
-                        text = "Check note",
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                },
-                modifier = modifier
-            )
+            FolderContent(context, modifier, iconModifier, folderId, swipeDismissibleNavController)
         }
     }
 }

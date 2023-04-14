@@ -3,6 +3,7 @@ package com.example.notesandfolders.presentation.component
 import android.app.RemoteInput
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -23,8 +24,11 @@ import androidx.wear.input.RemoteInputIntentHelper
 import com.example.notesandfolders.R
 import com.example.notesandfolders.presentation.wearableExtender
 import java.util.*
-import kotlin.collections.HashSet
 
+fun SharedPreferences.getStringSetAsCopy(key: String, defaultValue: Set<String>): HashSet<String>{
+    var set = this.getStringSet(key, defaultValue)
+    return HashSet(set)
+}
 
 @Composable
 fun CreateNoteButton(
@@ -35,7 +39,7 @@ fun CreateNoteButton(
 ) {
 
     var preferences = PreferenceManager.getDefaultSharedPreferences(context)
-    var folderContent = preferences.getStringSet(folderId, HashSet<String>())
+    var folderContent = preferences.getStringSetAsCopy(folderId, HashSet<String>())
     var inputTextKey = "input-key"
     val launcher =
         rememberLauncherForActivityResult(
@@ -46,9 +50,8 @@ fun CreateNoteButton(
                 val newInputText: CharSequence? = results.getCharSequence(inputTextKey)
                 var preferenceEditor = preferences.edit()
                 var noteId = "note_"+ UUID.randomUUID().toString()
-                var foldersClone = HashSet<String>(folderContent)
-                foldersClone.add(noteId)
-                preferenceEditor.putStringSet(folderId, foldersClone)
+                folderContent.add(noteId)
+                preferenceEditor.putStringSet(folderId, folderContent)
                 preferenceEditor.putString(noteId, newInputText as String)
                 preferenceEditor.commit()
             }
