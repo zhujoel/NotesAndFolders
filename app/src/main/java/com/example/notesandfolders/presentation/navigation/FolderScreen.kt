@@ -26,6 +26,11 @@ fun FolderScreen(
         autoCentering = AutoCenteringParams(itemIndex = 0)
     ) {
         item {
+            Text(
+                text = folderId
+            )
+        }
+        item {
             FolderContent(context, modifier, iconModifier, folderId, swipeDismissibleNavController)
         }
     }

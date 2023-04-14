@@ -24,7 +24,6 @@ fun FolderCard(
 
     CompactChip(
         onClick = {
-            var folderId = UUID.randomUUID().toString()
             swipeDismissibleNavController.navigate(Screen.Folder.route + "/$folderId")
         },
         label = {

@@ -37,7 +37,6 @@ fun CreateNoteButton(
     iconModifier: Modifier = Modifier,
     folderId: String, // Folder to create the folder into
 ) {
-
     var preferences = PreferenceManager.getDefaultSharedPreferences(context)
     var folderContent = preferences.getStringSetAsCopy(folderId, HashSet<String>())
     var inputTextKey = "input-key"

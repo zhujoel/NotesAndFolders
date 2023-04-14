@@ -28,22 +28,6 @@ fun LandingScreen(
         state = listState,
         autoCentering = AutoCenteringParams(itemIndex = 0)
     ) {
-        item {
-            Chip(
-                onClick = {
-                    var folderId = UUID.randomUUID().toString()
-                    swipeDismissibleNavController.navigate(Screen.Folder.route + "/$folderId")
-                },
-                label = {
-                    Text(
-                        text = "Check folders",
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                },
-                modifier = modifier
-            )
-        }
         item { FolderContent(context, modifier, iconModifier, stringResource(R.string.landing_screen_id), swipeDismissibleNavController) }
     }
 }

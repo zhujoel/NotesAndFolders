@@ -18,19 +18,18 @@ fun FolderContent(
     swipeDismissibleNavController: NavHostController,
 ) {
     var preferences = PreferenceManager.getDefaultSharedPreferences(context)
-    var documentsId = preferences.getStringSet(folderId, HashSet<String>()) ?: HashSet()
+    var documentsId = preferences.getStringSet(folderId, HashSet()) ?: HashSet()
 
     Column(modifier = modifier){
         for(id in documentsId){
             if (id.startsWith("folder_")){
                 FolderCard(context, modifier, iconModifier, id, swipeDismissibleNavController)
             }
-            else if (id.startsWith("note")) {
+            else if (id.startsWith("note_")) {
                 NoteCard(context, modifier, iconModifier, id)
             }
         }
 
         CreateNoteButton(context, modifier, iconModifier, folderId)
         CreateFolderButton(context, modifier, iconModifier, folderId)
-    }
 }

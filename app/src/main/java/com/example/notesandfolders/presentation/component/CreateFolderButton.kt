@@ -33,7 +33,9 @@ fun CreateFolderButton(
     folderId: String, // Folder to create the folder into
 ) {
     var preferences = PreferenceManager.getDefaultSharedPreferences(context)
-    var folderContent = preferences.getStringSet(folderId, HashSet<String>())
+    var folderContentId = "folder_content_$folderId"
+    var folderContent = preferences.getStringSet(folderContentId, HashSet<String>())
+    var foldersClone = HashSet<String>(folderContent)
     var inputTextKey = "input-key"
     val launcher =
         rememberLauncherForActivityResult(
@@ -43,12 +45,14 @@ fun CreateFolderButton(
                 val results: Bundle = RemoteInput.getResultsFromIntent(data)
                 val newInputText: CharSequence? = results.getCharSequence(inputTextKey)
                 var preferenceEditor = preferences.edit()
-                var subFolderId = "folder_"+ UUID.randomUUID().toString()
-                var foldersClone = HashSet<String>(folderContent)
-                foldersClone.add(subFolderId)
-                preferenceEditor.putStringSet(folderId, foldersClone)
-                preferenceEditor.putString(subFolderId, newInputText as String)
-                preferenceEditor.commit()
+                var subFolderId = UUID.randomUUID().toString()
+                var subFolderContentId = "folder_content_$subFolderId"
+                foldersClone.add(subFolderContentId)
+                preferenceEditor.putStringSet(folderContentId, foldersClone)
+                preferenceEditor.putStringSet(subFolderContentId, HashSet())
+                var subFolderTitleId = "folder_title_$subFolderId"
+                preferenceEditor.putString(subFolderTitleId, newInputText as String)
+                preferenceEditor.apply()
             }
         }
 
@@ -57,7 +61,7 @@ fun CreateFolderButton(
         RemoteInput.Builder(inputTextKey)
             .setLabel("Enter your folder name")
             .wearableExtender {
-                setEmojisAllowed(false)
+                setEmojisAllowed(true)
                 setInputActionType(EditorInfo.IME_ACTION_DONE)
             }.build()
     )
