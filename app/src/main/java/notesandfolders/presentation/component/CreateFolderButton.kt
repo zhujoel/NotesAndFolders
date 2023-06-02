@@ -35,7 +35,7 @@ fun CreateFolderButton(
     iconModifier: Modifier = Modifier,
     folderId: UUID // Current folder ID,
 ) {
-    var inputTextKey = "input-key"
+    var inputTextKey = "new-folder-button"
     val launcher = rememberLauncherForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {

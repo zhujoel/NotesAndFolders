@@ -21,7 +21,7 @@ fun FolderCard(
     folderId: UUID,
     swipeDismissibleNavController: NavHostController,
 ) {
-    var title = AppDatabase.getDatabase(context).folderDao().get(folderId).observeAsState().value?.title
+    var title = AppDatabase.getDatabase(context).folderDao().get(folderId).title
 
     CompactChip(
         onClick = {

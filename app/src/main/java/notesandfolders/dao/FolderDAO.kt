@@ -13,8 +13,8 @@ interface FolderDAO{
     fun insert(vararg folder: Folder)
 
     @Query("SELECT * FROM folder WHERE id = :id")
-    fun get(id: UUID): LiveData<Folder>
+    fun get(id: UUID): Folder
 
     @Query("SELECT * FROM folder WHERE parent_folder_id = :parentFolderId")
-    fun getChildFolders(parentFolderId: UUID): LiveData<List<Folder>>
+    fun getChildFolders(parentFolderId: UUID): List<Folder>
 }

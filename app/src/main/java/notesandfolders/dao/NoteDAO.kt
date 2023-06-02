@@ -13,8 +13,8 @@ interface NoteDAO{
     fun insert(vararg note: Note)
 
     @Query("SELECT * FROM note WHERE id = :id")
-    fun get(id: UUID): LiveData<Note>
+    fun get(id: UUID): Note
 
     @Query("SELECT * FROM note WHERE parent_folder_id = :parentFolderId")
-    fun getChildNotes(parentFolderId: UUID): LiveData<List<Note>>
+    fun getChildNotes(parentFolderId: UUID): List<Note>
 }

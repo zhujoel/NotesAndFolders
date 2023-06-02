@@ -22,7 +22,7 @@ fun NoteCard(
     noteId: UUID,
     swipeDismissibleNavController: NavHostController,
 ) {
-    var content = AppDatabase.getDatabase(context).noteDAO().get(noteId).observeAsState().value?.content
+    var content = AppDatabase.getDatabase(context).noteDAO().get(noteId).content
 
     CompactChip(
         onClick = {
@@ -30,13 +30,6 @@ fun NoteCard(
         },
         label = {
             Text (content ?: "")
-        },
-        icon = {
-            Icon(
-                imageVector = Icons.Rounded.Textsms,
-                contentDescription = "",
-                modifier = iconModifier
-            )
         },
         modifier = modifier
     )

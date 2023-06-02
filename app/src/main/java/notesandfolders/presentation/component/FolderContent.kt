@@ -1,6 +1,7 @@
 package notesandfolders.presentation.component
 
 import android.content.Context
+import android.widget.EditText
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
@@ -21,16 +22,16 @@ fun FolderContent(
     folderId: UUID,
     swipeDismissibleNavController: NavHostController
 ) {
-    var title =  AppDatabase.getDatabase(context).folderDao().get(folderId).observeAsState().value?.title
-    var subFolders = AppDatabase.getDatabase(context).folderDao().getChildFolders(folderId).observeAsState().value
-    var notes = AppDatabase.getDatabase(context).noteDAO().getChildNotes(folderId).observeAsState().value
+    var title =  AppDatabase.getDatabase(context).folderDao().get(folderId).title
+    var subFolders = AppDatabase.getDatabase(context).folderDao().getChildFolders(folderId).filter { folder -> folder.id != UUID(0L, 0L) }
+    var notes = AppDatabase.getDatabase(context).noteDAO().getChildNotes(folderId)
 
     Column(modifier = modifier) {
         Text(title ?: "")
-        for (subFolder in subFolders ?: emptyList()){
+        for (subFolder in subFolders){
             FolderCard(context, modifier, iconModifier, subFolder.id, swipeDismissibleNavController)
         }
-        for (note in notes ?: emptyList()){
+        for (note in notes){
             NoteCard(context, modifier, iconModifier, note.id, swipeDismissibleNavController)
         }
         CreateNoteButton(context, modifier, iconModifier, folderId)
