@@ -22,8 +22,12 @@ import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.Text
 import androidx.wear.input.RemoteInputIntentHelper
 import com.example.notesandfolders.R
+import notesandfolders.entities.AppDatabase
+import notesandfolders.entities.Folder
+import notesandfolders.entities.Note
 import notesandfolders.presentation.wearableExtender
 import java.util.*
+import kotlin.collections.HashSet
 
 fun SharedPreferences.getStringSetAsCopy(key: String, defaultValue: Set<String>): HashSet<String>{
     var set = this.getStringSet(key, defaultValue)
@@ -35,26 +39,20 @@ fun CreateNoteButton(
     context: Context,
     modifier: Modifier = Modifier,
     iconModifier: Modifier = Modifier,
-    folderId: String, // Folder to create the folder into
+    folderId: UUID, // Folder to create the folder into
 ) {
-    var preferences = PreferenceManager.getDefaultSharedPreferences(context)
-    var folderContent = preferences.getStringSetAsCopy(folderId.asFolderContentId(), HashSet<String>())
     var inputTextKey = "input-key"
-    val launcher =
-        rememberLauncherForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) {
-            it.data?.let { data ->
-                val results: Bundle = RemoteInput.getResultsFromIntent(data)
-                val newInputText: CharSequence? = results.getCharSequence(inputTextKey)
-                var preferenceEditor = preferences.edit()
-                var noteId = "note_"+ UUID.randomUUID().toString()
-                folderContent.add(noteId)
-                preferenceEditor.putStringSet(folderId.asFolderContentId(), folderContent)
-                preferenceEditor.putString(noteId, newInputText as String)
-                preferenceEditor.commit()
-            }
+    val launcher = rememberLauncherForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        it.data?.let { data ->
+            val results: Bundle = RemoteInput.getResultsFromIntent(data)
+            val newInputText: CharSequence? = results.getCharSequence(inputTextKey)
+            Thread{
+                AppDatabase.getDatabase(context).noteDAO().insert(Note(UUID.randomUUID(), folderId, newInputText as String))
+            }.start()
         }
+    }
 
     // Intent
     val intent: Intent = RemoteInputIntentHelper.createActionRemoteInputIntent()

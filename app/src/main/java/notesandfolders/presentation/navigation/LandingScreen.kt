@@ -8,6 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.wear.compose.material.*
 import com.example.notesandfolders.R
 import notesandfolders.presentation.component.FolderContent
+import java.util.UUID
 
 
 @Composable
@@ -18,12 +19,15 @@ fun LandingScreen(
     context: Context
 ) {
     val listState = rememberScalingLazyListState()
-    
+    var rootFolderId = UUID(0L, 0L)
+
     ScalingLazyColumn(
         modifier = modifier,
         state = listState,
         autoCentering = AutoCenteringParams(itemIndex = 0)
     ) {
-        item { FolderContent(context, modifier, iconModifier, stringResource(R.string.landing_screen_id), swipeDismissibleNavController) }
+        item {
+            FolderContent(context, modifier, iconModifier, rootFolderId, swipeDismissibleNavController)
+        }
     }
 }

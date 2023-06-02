@@ -21,6 +21,7 @@ import notesandfolders.presentation.navigation.LandingScreen
 import notesandfolders.presentation.navigation.NoteScreen
 import notesandfolders.presentation.navigation.Screen
 import notesandfolders.presentation.theme.NotesAndFoldersTheme
+import java.util.UUID
 
 class MainActivity : ComponentActivity() {
     internal lateinit var navController: NavHostController
@@ -84,7 +85,7 @@ fun WearApp(
                     )
                 ) {
                     entry ->
-                        FolderScreen(context, modifier, iconModifier, entry.arguments?.getString("folderId")!!, swipeDismissableNavController)
+                        FolderScreen(context, modifier, iconModifier, UUID.fromString(entry.arguments?.getString("folderId")), swipeDismissableNavController)
                 }
 
                 // Note Screen
@@ -98,7 +99,7 @@ fun WearApp(
                     )
                 ) {
                     entry ->
-                        NoteScreen(context, modifier, entry.arguments?.getString("noteId")!!)
+                        NoteScreen(context, modifier, UUID.fromString(entry.arguments?.getString("noteId")))
                 }
             }
         }

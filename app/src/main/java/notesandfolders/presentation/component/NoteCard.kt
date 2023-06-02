@@ -4,26 +4,32 @@ import android.content.Context
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Textsms
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
-import androidx.preference.PreferenceManager
+import androidx.navigation.NavHostController
 import androidx.wear.compose.material.CompactChip
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.Text
+import notesandfolders.entities.AppDatabase
+import notesandfolders.presentation.navigation.Screen
+import java.util.UUID
 
 @Composable
 fun NoteCard(
     context: Context,
     modifier: Modifier = Modifier,
     iconModifier: Modifier = Modifier,
-    noteId: String
+    noteId: UUID,
+    swipeDismissibleNavController: NavHostController,
 ) {
-    var preferences = PreferenceManager.getDefaultSharedPreferences(context)
-    var noteContent = preferences.getString(noteId, "") ?: ""
+    var content = AppDatabase.getDatabase(context).noteDAO().get(noteId).observeAsState().value?.content
 
     CompactChip(
-        onClick = {},
+        onClick = {
+            swipeDismissibleNavController.navigate(Screen.Note.route + "/$noteId")
+        },
         label = {
-            Text (noteContent)
+            Text (content ?: "")
         },
         icon = {
             Icon(

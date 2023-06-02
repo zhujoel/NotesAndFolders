@@ -28,7 +28,7 @@ abstract class AppDatabase : RoomDatabase(){
                                 super.onCreate(db)
                                 Thread {
                                     getDatabase(context).folderDao().insert(Folder(UUID(0L, 0L), UUID(0L, 0L), "root"))
-                                }
+                                }.start()
                             }
                         })
                         .build()

@@ -6,12 +6,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.wear.compose.material.ScalingLazyColumn
 import androidx.wear.compose.material.Text
+import java.util.UUID
 
 @Composable
 fun NoteScreen(
     context: Context,
     modifier: Modifier = Modifier,
-    noteId: String
+    noteId: UUID
 ) {
     ScalingLazyColumn(modifier = modifier){
         item {

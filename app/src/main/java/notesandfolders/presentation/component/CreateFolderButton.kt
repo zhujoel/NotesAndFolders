@@ -33,28 +33,20 @@ fun CreateFolderButton(
     context: Context,
     modifier: Modifier = Modifier,
     iconModifier: Modifier = Modifier,
-    folderId: String // Folder to create the folder into,
+    folderId: UUID // Current folder ID,
 ) {
-    var preferences = PreferenceManager.getDefaultSharedPreferences(context)
-    var folderContent = preferences.getStringSet(folderId.asFolderContentId(), HashSet<String>())
-    var foldersClone = HashSet<String>(folderContent)
     var inputTextKey = "input-key"
-    val launcher =
-        rememberLauncherForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) {
-            it.data?.let { data ->
-                val results: Bundle = RemoteInput.getResultsFromIntent(data)
-                val newInputText: CharSequence? = results.getCharSequence(inputTextKey)
-                var preferenceEditor = preferences.edit()
-                var subFolderId = UUID.randomUUID().toString()
-                foldersClone.add("folder_$subFolderId")
-                preferenceEditor.putStringSet(folderId.asFolderContentId(), foldersClone)
-                preferenceEditor.putStringSet(subFolderId.asFolderContentId(), HashSet())
-                preferenceEditor.putString("title_folder_$subFolderId", newInputText as String)
-                preferenceEditor.apply()
-            }
+    val launcher = rememberLauncherForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        it.data?.let { data ->
+            val results: Bundle = RemoteInput.getResultsFromIntent(data)
+            val newInputText: CharSequence? = results.getCharSequence(inputTextKey)
+            Thread{
+                AppDatabase.getDatabase(context).folderDao().insert(Folder(UUID.randomUUID(), folderId, newInputText as String))
+            }.start()
         }
+    }
 
     val intent: Intent = RemoteInputIntentHelper.createActionRemoteInputIntent()
     val remoteInputs: List<RemoteInput> = listOf(

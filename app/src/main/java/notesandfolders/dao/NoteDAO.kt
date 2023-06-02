@@ -1,5 +1,6 @@
 package notesandfolders.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -12,5 +13,8 @@ interface NoteDAO{
     fun insert(vararg note: Note)
 
     @Query("SELECT * FROM note WHERE id = :id")
-    fun get(id: UUID): Note
+    fun get(id: UUID): LiveData<Note>
+
+    @Query("SELECT * FROM note WHERE parent_folder_id = :parentFolderId")
+    fun getChildNotes(parentFolderId: UUID): LiveData<List<Note>>
 }

@@ -3,39 +3,36 @@ package notesandfolders.presentation.component
 import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.Observer
 import androidx.navigation.NavHostController
-import androidx.preference.PreferenceManager
 import notesandfolders.entities.AppDatabase
-import java.util.HashSet
-
-fun String.asFolderContentId(): String{
-    return "folder_content_$this"
-}
-fun String.asFolderTitleId(): String{
-    return "folder_title_$this"
-}
+import java.util.UUID
+import androidx.wear.compose.material.Text
+import notesandfolders.entities.Folder
+import notesandfolders.entities.Note
 
 @Composable
 fun FolderContent(
     context: Context,
     modifier: Modifier = Modifier,
     iconModifier: Modifier,
-    folderId: String,
+    folderId: UUID,
     swipeDismissibleNavController: NavHostController
 ) {
-    var preferences = PreferenceManager.getDefaultSharedPreferences(context)
-    var documentsId = preferences.getStringSet(folderId.asFolderContentId(), HashSet()) ?: HashSet()
+    var title =  AppDatabase.getDatabase(context).folderDao().get(folderId).observeAsState().value?.title
+    var subFolders = AppDatabase.getDatabase(context).folderDao().getChildFolders(folderId).observeAsState().value
+    var notes = AppDatabase.getDatabase(context).noteDAO().getChildNotes(folderId).observeAsState().value
 
     Column(modifier = modifier) {
-        for (id in documentsId) {
-            if (id.startsWith("folder_")) {
-                FolderCard(context, modifier, iconModifier, id, swipeDismissibleNavController)
-            } else if (id.startsWith("note_")) {
-                NoteCard(context, modifier, iconModifier, id)
-            }
+        Text(title ?: "")
+        for (subFolder in subFolders ?: emptyList()){
+            FolderCard(context, modifier, iconModifier, subFolder.id, swipeDismissibleNavController)
         }
-
+        for (note in notes ?: emptyList()){
+            NoteCard(context, modifier, iconModifier, note.id, swipeDismissibleNavController)
+        }
         CreateNoteButton(context, modifier, iconModifier, folderId)
         CreateFolderButton(context, modifier, iconModifier, folderId)
     }
