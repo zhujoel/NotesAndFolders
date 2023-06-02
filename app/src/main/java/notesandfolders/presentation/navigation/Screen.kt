@@ -1,4 +1,4 @@
-package com.example.notesandfolders.presentation.navigation
+package notesandfolders.presentation.navigation
 
 /**
  * Represent all Screens in the app.

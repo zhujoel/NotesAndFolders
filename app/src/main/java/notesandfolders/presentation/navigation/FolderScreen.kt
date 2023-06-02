@@ -1,15 +1,11 @@
-package com.example.notesandfolders.presentation.navigation
+package notesandfolders.presentation.navigation
 
 import android.content.Context
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.navigation.NavHostController
-import androidx.preference.PreferenceManager
 import androidx.wear.compose.material.*
-import com.example.notesandfolders.presentation.component.FolderContent
-import java.util.*
+import notesandfolders.presentation.component.FolderContent
 
 @Composable
 fun FolderScreen(

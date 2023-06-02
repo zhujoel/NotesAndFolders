@@ -1,4 +1,4 @@
-package com.example.notesandfolders.presentation.component
+package notesandfolders.presentation.component
 
 import android.app.RemoteInput
 import android.content.Context
@@ -22,7 +22,7 @@ import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.Text
 import androidx.wear.input.RemoteInputIntentHelper
 import com.example.notesandfolders.R
-import com.example.notesandfolders.presentation.wearableExtender
+import notesandfolders.presentation.wearableExtender
 import java.util.*
 
 fun SharedPreferences.getStringSetAsCopy(key: String, defaultValue: Set<String>): HashSet<String>{

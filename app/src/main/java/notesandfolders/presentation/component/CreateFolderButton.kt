@@ -1,4 +1,4 @@
-package com.example.notesandfolders.presentation.component
+package notesandfolders.presentation.component
 
 import android.app.RemoteInput
 import android.content.Context
@@ -16,12 +16,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.preference.PreferenceManager
+import androidx.room.RoomDatabase
 import androidx.wear.compose.material.Chip
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.Text
 import androidx.wear.input.RemoteInputIntentHelper
 import com.example.notesandfolders.R
-import com.example.notesandfolders.presentation.wearableExtender
+import notesandfolders.entities.AppDatabase
+import notesandfolders.entities.Folder
+import notesandfolders.presentation.wearableExtender
 import java.util.*
 import kotlin.collections.HashSet
 
@@ -30,7 +33,7 @@ fun CreateFolderButton(
     context: Context,
     modifier: Modifier = Modifier,
     iconModifier: Modifier = Modifier,
-    folderId: String, // Folder to create the folder into
+    folderId: String // Folder to create the folder into,
 ) {
     var preferences = PreferenceManager.getDefaultSharedPreferences(context)
     var folderContent = preferences.getStringSet(folderId.asFolderContentId(), HashSet<String>())

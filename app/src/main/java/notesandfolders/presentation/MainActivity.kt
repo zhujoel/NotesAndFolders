@@ -1,4 +1,4 @@
-package com.example.notesandfolders.presentation
+package notesandfolders.presentation
 
 import android.content.Context
 import android.os.Bundle
@@ -9,15 +9,18 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import androidx.room.Room
+import androidx.room.RoomDatabase
 import androidx.wear.compose.material.*
 import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
-import com.example.notesandfolders.presentation.navigation.FolderScreen
-import com.example.notesandfolders.presentation.navigation.LandingScreen
-import com.example.notesandfolders.presentation.navigation.NoteScreen
-import com.example.notesandfolders.presentation.navigation.Screen
-import com.example.notesandfolders.presentation.theme.NotesAndFoldersTheme
+import notesandfolders.entities.AppDatabase
+import notesandfolders.presentation.navigation.FolderScreen
+import notesandfolders.presentation.navigation.LandingScreen
+import notesandfolders.presentation.navigation.NoteScreen
+import notesandfolders.presentation.navigation.Screen
+import notesandfolders.presentation.theme.NotesAndFoldersTheme
 
 class MainActivity : ComponentActivity() {
     internal lateinit var navController: NavHostController
@@ -69,6 +72,7 @@ fun WearApp(
                         context)
                 }
 
+                /** Routes */
                 // Folder Screen
                 composable(
                     route = Screen.Folder.route + "/{folderId}",

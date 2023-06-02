@@ -65,6 +65,16 @@ dependencies {
 
     // Storage
     implementation 'androidx.preference:preference:1.2.0'
+    // Room DB
+    def room_version = "2.5.1"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    // To use Kotlin annotation processing tool (kapt)
+    apply plugin: 'kotlin-kapt'
+    kapt "androidx.room:room-compiler:$room_version"
+    // RxJava3 support for Room
+    implementation "androidx.room:room-rxjava3:$room_version"
+
 
     // Testing
     testImplementation "junit:junit:$junit_version"

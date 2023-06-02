@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.notesandfolders.presentation
+package notesandfolders.presentation
 
 import android.app.RemoteInput
 import android.os.Bundle

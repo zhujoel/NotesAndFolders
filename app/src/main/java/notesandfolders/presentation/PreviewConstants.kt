@@ -1,4 +1,4 @@
-package com.example.notesandfolders.presentation
+package notesandfolders.presentation
 
 import android.content.res.Configuration
 

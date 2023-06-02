@@ -1,4 +1,4 @@
-package com.example.notesandfolders.presentation.component
+package notesandfolders.presentation.component
 
 import android.content.Context
 import androidx.compose.foundation.layout.Column
@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.preference.PreferenceManager
+import notesandfolders.entities.AppDatabase
 import java.util.HashSet
 
 fun String.asFolderContentId(): String{
@@ -21,7 +22,7 @@ fun FolderContent(
     modifier: Modifier = Modifier,
     iconModifier: Modifier,
     folderId: String,
-    swipeDismissibleNavController: NavHostController,
+    swipeDismissibleNavController: NavHostController
 ) {
     var preferences = PreferenceManager.getDefaultSharedPreferences(context)
     var documentsId = preferences.getStringSet(folderId.asFolderContentId(), HashSet()) ?: HashSet()

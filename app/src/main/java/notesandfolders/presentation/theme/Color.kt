@@ -1,4 +1,4 @@
-package com.example.notesandfolders.presentation.theme
+package notesandfolders.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 import androidx.wear.compose.material.Colors

@@ -1,4 +1,4 @@
-package com.example.notesandfolders.presentation.component
+package notesandfolders.presentation.component
 
 import android.content.Context
 import androidx.compose.material.icons.Icons
@@ -8,8 +8,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.preference.PreferenceManager
 import androidx.wear.compose.material.*
-import com.example.notesandfolders.presentation.navigation.Screen
-import java.util.*
+import notesandfolders.entities.AppDatabase
+import notesandfolders.presentation.navigation.Screen
 
 @Composable
 fun FolderCard(
@@ -21,6 +21,7 @@ fun FolderCard(
 ) {
     var preferences = PreferenceManager.getDefaultSharedPreferences(context)
     var folderTitle = preferences.getString("title_$folderId", "Folder") ?: "Folder"
+    var folderTitle2 = "not loaded"
 
     CompactChip(
         onClick = {
