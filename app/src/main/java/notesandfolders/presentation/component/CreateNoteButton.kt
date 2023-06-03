@@ -75,7 +75,7 @@ fun CreateNoteButton(
         horizontalArrangement = Arrangement.Center,
     ) {
         Chip(
-            onClick = { launcher.launch(intent)},
+            onClick = { launcher.launch(intent) },
             label = {
                 Text(
                     stringResource(R.string.create_note_button_label),

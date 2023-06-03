@@ -5,4 +5,8 @@
     <string name="create_folder_button_description">Create folder action</string>
     <string name="create_note_button_label">Create note</string>
     <string name="create_note_button_description">Create note action</string>
+    <string name="delete_folder_button_label">Delete</string>
+    <string name="delete_folder_button_description">Delete folder action</string>
+    <string name="delete_note_button_label">Delete</string>
+    <string name="delete_note_button_description">Delete note action</string>
 </resources>

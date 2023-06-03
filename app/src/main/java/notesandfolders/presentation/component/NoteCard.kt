@@ -22,14 +22,14 @@ fun NoteCard(
     noteId: UUID,
     swipeDismissibleNavController: NavHostController,
 ) {
-    var content = AppDatabase.getDatabase(context).noteDAO().get(noteId).content
+    var note = AppDatabase.getDatabase(context).noteDAO().get(noteId)
 
     CompactChip(
         onClick = {
             swipeDismissibleNavController.navigate(Screen.Note.route + "/$noteId")
         },
         label = {
-            Text (content ?: "")
+            Text (note.content)
         },
         modifier = modifier
     )

@@ -2,6 +2,7 @@ package notesandfolders.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import notesandfolders.entities.Folder
@@ -17,4 +18,7 @@ interface FolderDAO{
 
     @Query("SELECT * FROM folder WHERE parent_folder_id = :parentFolderId")
     fun getChildFolders(parentFolderId: UUID): List<Folder>
+
+    @Delete
+    fun delete(folder: Folder)
 }

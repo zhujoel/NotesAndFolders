@@ -4,8 +4,13 @@ import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
@@ -30,15 +35,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         var context = applicationContext
         setContent {
-            /*
             val contentModifier = Modifier.fillMaxWidth()
             val iconModifier = Modifier
                 .size(24.dp)
                 .wrapContentSize(align = Alignment.Center)
-            */
             navController = rememberSwipeDismissableNavController()
 
-            WearApp(context, swipeDismissableNavController = navController)
+            WearApp(context, contentModifier, iconModifier, swipeDismissableNavController = navController)
         }
     }
 }
@@ -99,7 +102,7 @@ fun WearApp(
                     )
                 ) {
                     entry ->
-                        NoteScreen(context, modifier, UUID.fromString(entry.arguments?.getString("noteId")))
+                        NoteScreen(context, modifier, iconModifier, UUID.fromString(entry.arguments?.getString("noteId")), swipeDismissableNavController)
                 }
             }
         }

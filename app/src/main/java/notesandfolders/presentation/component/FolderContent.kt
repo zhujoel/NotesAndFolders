@@ -22,12 +22,12 @@ fun FolderContent(
     folderId: UUID,
     swipeDismissibleNavController: NavHostController
 ) {
-    var title =  AppDatabase.getDatabase(context).folderDao().get(folderId).title
+    var folder =  AppDatabase.getDatabase(context).folderDao().get(folderId)
     var subFolders = AppDatabase.getDatabase(context).folderDao().getChildFolders(folderId).filter { folder -> folder.id != UUID(0L, 0L) }
     var notes = AppDatabase.getDatabase(context).noteDAO().getChildNotes(folderId)
 
     Column(modifier = modifier) {
-        Text(title ?: "")
+        Text(folder.title)
         for (subFolder in subFolders){
             FolderCard(context, modifier, iconModifier, subFolder.id, swipeDismissibleNavController)
         }
@@ -36,5 +36,6 @@ fun FolderContent(
         }
         CreateNoteButton(context, modifier, iconModifier, folderId)
         CreateFolderButton(context, modifier, iconModifier, folderId)
+        DeleteFolderButton(context, modifier, iconModifier, folder, swipeDismissibleNavController)
     }
 }
