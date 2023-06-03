@@ -51,7 +51,7 @@ fun CreateNoteButton(
             val results: Bundle = RemoteInput.getResultsFromIntent(data)
             val newInputText: CharSequence? = results.getCharSequence(inputTextKey)
             Thread{
-                AppDatabase.getDatabase(context).noteDAO().insert(Note(UUID.randomUUID(), folderId, newInputText as String))
+                AppDatabase.getDatabase(context).noteDAO().insert(Note(UUID.randomUUID(), folderId, newInputText.toString()))
             }.start()
         }
     }

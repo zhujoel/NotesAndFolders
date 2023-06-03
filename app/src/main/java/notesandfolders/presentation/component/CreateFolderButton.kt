@@ -43,7 +43,7 @@ fun CreateFolderButton(
             val results: Bundle = RemoteInput.getResultsFromIntent(data)
             val newInputText: CharSequence? = results.getCharSequence(inputTextKey)
             Thread{
-                AppDatabase.getDatabase(context).folderDao().insert(Folder(UUID.randomUUID(), folderId, newInputText as String))
+                AppDatabase.getDatabase(context).folderDao().insert(Folder(UUID.randomUUID(), folderId, newInputText.toString()))
             }.start()
         }
     }
