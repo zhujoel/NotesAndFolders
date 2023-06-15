@@ -15,10 +15,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.preference.PreferenceManager
+import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.Chip
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.Text
@@ -39,7 +42,6 @@ fun SharedPreferences.getStringSetAsCopy(key: String, defaultValue: Set<String>)
 @Composable
 fun CreateNoteButton(
     context: Context,
-    modifier: Modifier = Modifier,
     iconModifier: Modifier = Modifier,
     folderId: UUID, // Folder to create the folder into
 ) {
@@ -70,22 +72,13 @@ fun CreateNoteButton(
     )
     RemoteInputIntentHelper.putRemoteInputsExtra(intent, remoteInputs)
 
-    Chip(
+    Button(
         onClick = { launcher.launch(intent) },
-        label = {
-            Text(
-                stringResource(R.string.create_note_button_label),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-        },
-        icon = {
-            Icon(
-                imageVector = Icons.Rounded.Add,
-                contentDescription = stringResource(R.string.create_note_button_description),
-                modifier = iconModifier
-            )
-        },
-        modifier = modifier
-    )
+    ) {
+        Icon(
+            imageVector = ImageVector.vectorResource(R.drawable.note_add),
+            contentDescription = stringResource(R.string.create_note_button_description),
+            modifier = iconModifier,
+        )
+    }
 }

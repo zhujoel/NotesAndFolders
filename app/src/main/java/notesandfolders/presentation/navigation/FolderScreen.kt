@@ -2,6 +2,8 @@ package notesandfolders.presentation.navigation
 
 import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -66,8 +68,15 @@ fun FolderScreen(
                         swipeDismissibleNavController
                     )
                 })
-            item { CreateNoteButton(context, modifier, iconModifier, folderId) }
-            item { CreateFolderButton(context, modifier, iconModifier, folderId) }
+            item {
+                Row (
+                    modifier = modifier,
+                    horizontalArrangement = Arrangement.Center
+                ){
+                    CreateNoteButton(context, iconModifier, folderId)
+                    CreateFolderButton(context, iconModifier, folderId)
+                }
+            }
             if (!isRootFolder) {
                 item {
                     DeleteFolderButton(
