@@ -1,8 +1,11 @@
 package notesandfolders.presentation.navigation
 
 import android.content.Context
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.wear.compose.material.*
 import notesandfolders.entities.AppDatabase
@@ -59,7 +62,6 @@ fun FolderScreen(
                     NoteCard(
                         context,
                         modifier,
-                        iconModifier,
                         notes[index].id,
                         swipeDismissibleNavController
                     )
