@@ -14,15 +14,11 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
-import androidx.room.Room
-import androidx.room.RoomDatabase
 import androidx.wear.compose.material.*
 import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
-import notesandfolders.entities.AppDatabase
 import notesandfolders.presentation.navigation.FolderScreen
-import notesandfolders.presentation.navigation.LandingScreen
 import notesandfolders.presentation.navigation.NoteScreen
 import notesandfolders.presentation.navigation.Screen
 import notesandfolders.presentation.theme.NotesAndFoldersTheme
@@ -69,11 +65,8 @@ fun WearApp(
                 composable(
                     route = Screen.Landing.route
                 ) {
-                    LandingScreen(
-                        modifier,
-                        iconModifier,
-                        swipeDismissableNavController,
-                        context)
+                    var rootFolderId = UUID(0L, 0L)
+                    FolderScreen(context, modifier, iconModifier, rootFolderId, swipeDismissableNavController)
                 }
 
                 /** Routes */

@@ -21,6 +21,7 @@ fun FolderScreen(
     folderId: UUID,
     swipeDismissibleNavController: NavHostController
 ) {
+    var isRootFolder = folderId == UUID(0L, 0L)
     var folder =  AppDatabase.getDatabase(context).folderDao().get(folderId)
     var subFolders = AppDatabase.getDatabase(context).folderDao().getChildFolders(folderId).filter { folder -> folder.id != UUID(0L, 0L) }
     var notes = AppDatabase.getDatabase(context).noteDAO().getChildNotes(folderId)
@@ -31,7 +32,9 @@ fun FolderScreen(
         state = listState,
         autoCentering = AutoCenteringParams(itemIndex = 0)
     ) {
-        item { Text(folder.title) }
+        if (!isRootFolder) {
+            item { Text(folder.title) }
+        }
         items(
             count = subFolders.size,
             key = { subFolders[it].id },
@@ -46,6 +49,16 @@ fun FolderScreen(
             })
         item { CreateNoteButton(context, modifier, iconModifier, folderId) }
         item { CreateFolderButton(context, modifier, iconModifier, folderId) }
-        item { DeleteFolderButton(context, modifier, iconModifier, folder, swipeDismissibleNavController) }
+        if (!isRootFolder) {
+            item {
+                DeleteFolderButton(
+                    context,
+                    modifier,
+                    iconModifier,
+                    folder,
+                    swipeDismissibleNavController
+                )
+            }
+        }
     }
 }

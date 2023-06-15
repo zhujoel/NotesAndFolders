@@ -59,27 +59,22 @@ fun CreateFolderButton(
     )
     RemoteInputIntentHelper.putRemoteInputsExtra(intent, remoteInputs)
 
-    Row(
-        modifier = modifier,
-        horizontalArrangement = Arrangement.Center,
-    ) {
-        Chip(
-            onClick = { launcher.launch(intent) },
-            label = {
-                Text(
-                    stringResource(R.string.create_folder_button_label),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-            },
-            icon = {
-                Icon(
-                    imageVector = Icons.Rounded.Add,
-                    contentDescription = stringResource(R.string.create_folder_button_description),
-                    modifier = iconModifier
-                )
-            },
-            modifier = modifier
-        )
-    }
+    Chip(
+        onClick = { launcher.launch(intent) },
+        label = {
+            Text(
+                stringResource(R.string.create_folder_button_label),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        },
+        icon = {
+            Icon(
+                imageVector = Icons.Rounded.Add,
+                contentDescription = stringResource(R.string.create_folder_button_description),
+                modifier = iconModifier
+            )
+        },
+        modifier = modifier
+    )
 }
