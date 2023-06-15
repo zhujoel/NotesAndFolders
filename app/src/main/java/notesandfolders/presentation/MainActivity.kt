@@ -50,53 +50,45 @@ fun WearApp(
     swipeDismissableNavController: NavHostController = rememberSwipeDismissableNavController()
 ) {
     NotesAndFoldersTheme {
-        val listState = rememberScalingLazyListState()
-
-        Scaffold(
-            timeText = { TimeText(modifier = Modifier.scrollAway(listState)) },
-            vignette = { Vignette(vignettePosition = VignettePosition.TopAndBottom) },
-            positionIndicator = { PositionIndicator(scalingLazyListState = listState) },
+        SwipeDismissableNavHost(
+            navController = swipeDismissableNavController,
+            startDestination = Screen.Landing.route
         ) {
-            SwipeDismissableNavHost(
-                navController = swipeDismissableNavController,
-                startDestination = Screen.Landing.route
+            // Main Window
+            composable(
+                route = Screen.Landing.route
             ) {
-                // Main Window
-                composable(
-                    route = Screen.Landing.route
-                ) {
-                    var rootFolderId = UUID(0L, 0L)
-                    FolderScreen(context, modifier, iconModifier, rootFolderId, swipeDismissableNavController)
-                }
+                var rootFolderId = UUID(0L, 0L)
+                FolderScreen(context, modifier, iconModifier, rootFolderId, swipeDismissableNavController)
+            }
 
-                /** Routes */
-                // Folder Screen
-                composable(
-                    route = Screen.Folder.route + "/{folderId}",
-                    arguments = listOf(
-                        navArgument("folderId") {
-                            type = NavType.StringType
-                            nullable = false
-                        }
-                    )
-                ) {
-                    entry ->
-                        FolderScreen(context, modifier, iconModifier, UUID.fromString(entry.arguments?.getString("folderId")), swipeDismissableNavController)
-                }
+            /** Routes */
+            // Folder Screen
+            composable(
+                route = Screen.Folder.route + "/{folderId}",
+                arguments = listOf(
+                    navArgument("folderId") {
+                        type = NavType.StringType
+                        nullable = false
+                    }
+                )
+            ) {
+                entry ->
+                    FolderScreen(context, modifier, iconModifier, UUID.fromString(entry.arguments?.getString("folderId")), swipeDismissableNavController)
+            }
 
-                // Note Screen
-                composable(
-                    route = Screen.Note.route + "/{noteId}",
-                    arguments = listOf(
-                        navArgument("noteId") {
-                            type = NavType.StringType
-                            nullable = false
-                        }
-                    )
-                ) {
-                    entry ->
-                        NoteScreen(context, modifier, iconModifier, UUID.fromString(entry.arguments?.getString("noteId")), swipeDismissableNavController)
-                }
+            // Note Screen
+            composable(
+                route = Screen.Note.route + "/{noteId}",
+                arguments = listOf(
+                    navArgument("noteId") {
+                        type = NavType.StringType
+                        nullable = false
+                    }
+                )
+            ) {
+                entry ->
+                    NoteScreen(context, modifier, iconModifier, UUID.fromString(entry.arguments?.getString("noteId")), swipeDismissableNavController)
             }
         }
     }

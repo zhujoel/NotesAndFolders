@@ -27,37 +27,55 @@ fun FolderScreen(
     var notes = AppDatabase.getDatabase(context).noteDAO().getChildNotes(folderId)
     val listState = rememberScalingLazyListState()
 
-    ScalingLazyColumn(
-        modifier = modifier,
-        state = listState,
-        autoCentering = AutoCenteringParams(itemIndex = 0)
+    Scaffold(
+        timeText = { TimeText(modifier = Modifier.scrollAway(listState)) },
+        vignette = { Vignette(vignettePosition = VignettePosition.TopAndBottom) },
+        positionIndicator = { PositionIndicator(scalingLazyListState = listState) },
     ) {
-        if (!isRootFolder) {
-            item { Text(folder.title) }
-        }
-        items(
-            count = subFolders.size,
-            key = { subFolders[it].id },
-            itemContent = {
-                index -> FolderCard(context, modifier, iconModifier, subFolders[index].id, swipeDismissibleNavController)
-            })
-        items(
-            count = notes.size,
-            key = { notes[it].id },
-            itemContent = {
-                    index -> NoteCard(context, modifier, iconModifier, notes[index].id, swipeDismissibleNavController)
-            })
-        item { CreateNoteButton(context, modifier, iconModifier, folderId) }
-        item { CreateFolderButton(context, modifier, iconModifier, folderId) }
-        if (!isRootFolder) {
-            item {
-                DeleteFolderButton(
-                    context,
-                    modifier,
-                    iconModifier,
-                    folder,
-                    swipeDismissibleNavController
-                )
+        ScalingLazyColumn(
+            modifier = modifier,
+            state = listState,
+            autoCentering = AutoCenteringParams(itemIndex = 0)
+        ) {
+            if (!isRootFolder) {
+                item { Text(folder.title) }
+            }
+            items(
+                count = subFolders.size,
+                key = { subFolders[it].id },
+                itemContent = { index ->
+                    FolderCard(
+                        context,
+                        modifier,
+                        iconModifier,
+                        subFolders[index].id,
+                        swipeDismissibleNavController
+                    )
+                })
+            items(
+                count = notes.size,
+                key = { notes[it].id },
+                itemContent = { index ->
+                    NoteCard(
+                        context,
+                        modifier,
+                        iconModifier,
+                        notes[index].id,
+                        swipeDismissibleNavController
+                    )
+                })
+            item { CreateNoteButton(context, modifier, iconModifier, folderId) }
+            item { CreateFolderButton(context, modifier, iconModifier, folderId) }
+            if (!isRootFolder) {
+                item {
+                    DeleteFolderButton(
+                        context,
+                        modifier,
+                        iconModifier,
+                        folder,
+                        swipeDismissibleNavController
+                    )
+                }
             }
         }
     }
