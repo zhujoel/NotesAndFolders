@@ -3,6 +3,9 @@ package notesandfolders.presentation.navigation
 import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -70,11 +73,13 @@ fun FolderScreen(
                 })
             item {
                 Row (
-                    modifier = modifier,
-                    horizontalArrangement = Arrangement.Center
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically,
                 ){
-                    CreateNoteButton(context, iconModifier, folderId)
                     CreateFolderButton(context, iconModifier, folderId)
+                    Spacer(modifier = Modifier.size(2.dp))
+                    CreateNoteButton(context, iconModifier, folderId)
                 }
             }
             if (!isRootFolder) {

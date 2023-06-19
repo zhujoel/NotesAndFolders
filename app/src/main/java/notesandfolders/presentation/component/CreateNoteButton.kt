@@ -6,38 +6,36 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
-import android.widget.EditText
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.core.app.ActivityCompat.startActivityForResult
-import androidx.preference.PreferenceManager
-import androidx.wear.compose.material.Button
-import androidx.wear.compose.material.Chip
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.wear.compose.material.Card
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.Text
 import androidx.wear.input.RemoteInputIntentHelper
 import com.example.notesandfolders.R
 import notesandfolders.entities.AppDatabase
-import notesandfolders.entities.Folder
 import notesandfolders.entities.Note
 import notesandfolders.presentation.wearableExtender
 import java.util.*
 import kotlin.collections.HashSet
-
-fun SharedPreferences.getStringSetAsCopy(key: String, defaultValue: Set<String>): HashSet<String>{
-    var set = this.getStringSet(key, defaultValue)
-    return HashSet(set)
-}
 
 @Composable
 fun CreateNoteButton(
@@ -72,13 +70,25 @@ fun CreateNoteButton(
     )
     RemoteInputIntentHelper.putRemoteInputsExtra(intent, remoteInputs)
 
-    Button(
+    Card(
         onClick = { launcher.launch(intent) },
-    ) {
-        Icon(
-            imageVector = ImageVector.vectorResource(R.drawable.note_add),
-            contentDescription = stringResource(R.string.create_note_button_description),
-            modifier = iconModifier,
-        )
-    }
+        content = {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxHeight())
+            {
+                Icon(
+                    imageVector = ImageVector.vectorResource(R.drawable.note_add),
+                    contentDescription = stringResource(R.string.create_note_button_description),
+                    modifier = Modifier.size(25.dp)
+                )
+                Spacer(modifier = Modifier.size(4.dp))
+                Text("New", fontWeight = FontWeight.Medium)
+            }
+        },
+        modifier = Modifier
+            .fillMaxWidth(1f)
+            .height(50.dp),
+        shape = RoundedCornerShape(10.dp)
+    )
 }

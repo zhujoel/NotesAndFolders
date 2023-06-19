@@ -2,14 +2,27 @@ package notesandfolders.presentation.component
 
 import android.content.Context
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.wear.compose.material.Card
 import androidx.wear.compose.material.Chip
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.Text
@@ -25,25 +38,12 @@ fun DeleteFolderButton(
     folder: Folder,
     swipeDismissibleNavController: NavHostController
 ) {
-    Chip(
+    Card(
         onClick = {
             swipeDismissibleNavController.popBackStack()
             AppDatabase.getDatabase(context).folderDao().delete(folder)
         },
-        label = {
-            Text(
-                stringResource(R.string.delete_folder_button_label),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-        },
-        icon = {
-            Icon(
-                imageVector = Icons.Rounded.Delete,
-                contentDescription = stringResource(R.string.delete_folder_button_description),
-                modifier = iconModifier
-            )
-        },
-        modifier = modifier
+        content = { Text("Delete") },
+        shape = RoundedCornerShape(10.dp)
     )
 }
