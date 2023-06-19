@@ -1,14 +1,12 @@
 package notesandfolders.presentation.navigation
 
 import android.content.Context
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavHostController
 import androidx.wear.compose.material.PositionIndicator
 import androidx.wear.compose.material.Scaffold
 import androidx.wear.compose.material.ScalingLazyColumn
-import androidx.wear.compose.material.ScalingLazyListState
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.TimeText
 import androidx.wear.compose.material.Vignette
@@ -23,7 +21,6 @@ import java.util.UUID
 fun NoteScreen(
     context: Context,
     modifier: Modifier = Modifier,
-    iconModifier: Modifier,
     noteId: UUID,
     swipeDismissibleNavController: NavHostController
 ) {
@@ -42,8 +39,6 @@ fun NoteScreen(
             item {
                 DeleteNoteButton(
                     context,
-                    modifier,
-                    iconModifier,
                     note,
                     swipeDismissibleNavController
                 )

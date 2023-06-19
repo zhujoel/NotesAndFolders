@@ -1,13 +1,10 @@
 package notesandfolders.presentation.component
 
 import android.content.Context
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Folder
 import androidx.compose.runtime.Composable
@@ -16,7 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import androidx.wear.compose.material.*
+import androidx.wear.compose.material.Card
+import androidx.wear.compose.material.Icon
+import androidx.wear.compose.material.Text
 import notesandfolders.entities.AppDatabase
 import notesandfolders.presentation.navigation.Screen
 import java.util.UUID
@@ -54,26 +53,4 @@ fun FolderCard(
             } },
         modifier = modifier,
     )
-/*
-    Chip(
-        onClick = {
-            swipeDismissibleNavController.navigate(Screen.Folder.route + "/$folderId")
-        },
-        label = {
-            Text (
-                folder.title,
-                overflow = TextOverflow.Ellipsis
-            )
-        },
-        icon = {
-            Icon(
-                imageVector = Icons.Filled.Folder,
-                contentDescription = "",
-                modifier = iconModifier
-            )
-        },
-        modifier = modifier,
-    )
-
- */
 }

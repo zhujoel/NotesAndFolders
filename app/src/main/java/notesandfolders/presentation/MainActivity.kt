@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
-import androidx.wear.compose.material.*
 import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
@@ -88,7 +87,7 @@ fun WearApp(
                 )
             ) {
                 entry ->
-                    NoteScreen(context, modifier, iconModifier, UUID.fromString(entry.arguments?.getString("noteId")), swipeDismissableNavController)
+                    NoteScreen(context, modifier, UUID.fromString(entry.arguments?.getString("noteId")), swipeDismissableNavController)
             }
         }
     }
