@@ -1,10 +1,9 @@
 package notesandfolders.presentation.component
 
 import android.content.Context
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.wear.compose.material.Card
 import androidx.wear.compose.material.Text
@@ -16,7 +15,8 @@ fun DeleteNoteButton(
     context: Context,
     note: Note,
     swipeDismissibleNavController: NavHostController,
-    backgroundPainter: Painter
+    backgroundPainter: Painter,
+    shape: Shape
 ) {
     Card(
         onClick = {
@@ -24,7 +24,7 @@ fun DeleteNoteButton(
             AppDatabase.getDatabase(context).noteDAO().delete(note)
         },
         content = { Text("Delete") },
-        shape = RoundedCornerShape(10.dp),
+        shape = shape,
         backgroundPainter = backgroundPainter
     )
 }

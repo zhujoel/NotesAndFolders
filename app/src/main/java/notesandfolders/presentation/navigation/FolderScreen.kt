@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -56,6 +57,7 @@ fun FolderScreen(
         endBackgroundColor = MaterialTheme.colors.onSurfaceVariant.copy(alpha = 0.20f)
             .compositeOver(MaterialTheme.colors.background),
         gradientDirection = LocalLayoutDirection.current)
+    var shape = RoundedCornerShape(10.dp)
 
     Scaffold(
         timeText = { TimeText(modifier = Modifier.scrollAway(listState)) },
@@ -93,15 +95,17 @@ fun FolderScreen(
                         swipeDismissibleNavController
                     )
                 })
-            item {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.BottomStart
-                ){
-                    Text(
-                        text = "Edited " + SimpleDateFormat("dd/MM/yyyy HH:mm").format(folder.lastUpdated),
-                        fontSize = 12.sp
-                    )
+            if (!isRootFolder) {
+                item {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.BottomStart
+                    ) {
+                        Text(
+                            text = "Edited " + SimpleDateFormat("dd/MM/yyyy HH:mm").format(folder.lastUpdated),
+                            fontSize = 12.sp
+                        )
+                    }
                 }
             }
             item {
@@ -110,13 +114,13 @@ fun FolderScreen(
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically,
                 ){
-                    CreateFolderButton(context, folderId, buttonBackgroundPainter)
+                    CreateFolderButton(context, folderId, buttonBackgroundPainter, shape)
                     Spacer(modifier = Modifier.size(2.dp))
-                    CreateNoteButton(context, folderId, buttonBackgroundPainter)
+                    CreateNoteButton(context, folderId, buttonBackgroundPainter, shape)
                 }
             }
             if (!isRootFolder) {
-                item { DeleteFolderButton(context, folder, swipeDismissibleNavController, buttonBackgroundPainter) }
+                item { DeleteFolderButton(context, folder, swipeDismissibleNavController, buttonBackgroundPainter, shape) }
             }
         }
     }

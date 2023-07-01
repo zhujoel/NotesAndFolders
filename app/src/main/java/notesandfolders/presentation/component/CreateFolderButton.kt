@@ -13,10 +13,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -38,7 +38,8 @@ import java.util.UUID
 fun CreateFolderButton(
     context: Context,
     folderId: UUID, // Current folder ID
-    backgroundPainter: Painter
+    backgroundPainter: Painter,
+    shape: Shape
 ) {
     var inputTextKey = "new-folder-button"
     val launcher = rememberLauncherForActivityResult(
@@ -81,7 +82,7 @@ fun CreateFolderButton(
             }
         },
         modifier = Modifier.fillMaxWidth(0.5f),
-        shape = RoundedCornerShape(10.dp),
+        shape = shape,
         backgroundPainter = backgroundPainter
     )
 }

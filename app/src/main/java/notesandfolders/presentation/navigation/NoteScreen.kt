@@ -3,12 +3,14 @@ package notesandfolders.presentation.navigation
 import android.content.Context
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.wear.compose.material.CardDefaults
@@ -41,6 +43,7 @@ fun NoteScreen(
         endBackgroundColor = MaterialTheme.colors.onSurfaceVariant.copy(alpha = 0.20f)
             .compositeOver(MaterialTheme.colors.background),
         gradientDirection = LocalLayoutDirection.current)
+    var shape = RoundedCornerShape(10.dp)
 
     Scaffold(
         timeText = { TimeText(modifier = Modifier.scrollAway(listState)) },
@@ -62,7 +65,7 @@ fun NoteScreen(
                     )
                 }
             }
-            item { DeleteNoteButton(context, note, swipeDismissibleNavController, buttonBackgroundPainter) }
+            item { DeleteNoteButton(context, note, swipeDismissibleNavController, buttonBackgroundPainter, shape) }
         }
     }
 }

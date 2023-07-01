@@ -12,10 +12,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -37,7 +37,8 @@ import java.util.UUID
 fun CreateNoteButton(
     context: Context,
     folderId: UUID, // Folder to create the folder into
-    backgroundPainter: Painter
+    backgroundPainter: Painter,
+    shape: Shape
 ) {
     var inputTextKey = "new-note-input"
     val launcher = rememberLauncherForActivityResult(
@@ -83,7 +84,7 @@ fun CreateNoteButton(
             }
         },
         modifier = Modifier.fillMaxWidth(1f),
-        shape = RoundedCornerShape(10.dp),
+        shape = shape,
         backgroundPainter = backgroundPainter
     )
 }
