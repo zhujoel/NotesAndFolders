@@ -49,7 +49,7 @@ fun FolderScreen(
 ) {
     var isRootFolder = folderId == UUID(0L, 0L)
     var folder =  AppDatabase.getDatabase(context).folderDao().get(folderId)
-    var subFolders = AppDatabase.getDatabase(context).folderDao().getChildFolders(folderId).filter { folder -> folder.id != UUID(0L, 0L) }
+    var subFolders = AppDatabase.getDatabase(context).folderDao().getChildFolders(folderId).filter {fold -> fold.id != UUID(0L, 0L) }
     var notes = AppDatabase.getDatabase(context).noteDAO().getChildNotes(folderId)
     val listState = rememberScalingLazyListState()
     var buttonBackgroundPainter = CardDefaults.cardBackgroundPainter(

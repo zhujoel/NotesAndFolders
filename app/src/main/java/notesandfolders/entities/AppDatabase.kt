@@ -11,7 +11,7 @@ import notesandfolders.dao.NoteDAO
 import java.util.Date
 import java.util.UUID
 
-@Database(entities= [Folder::class, Note::class], version = 1)
+@Database(entities= [Folder::class, Note::class], version = 1, exportSchema = false)
 @TypeConverters(DbTypeConverters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun folderDao(): FolderDAO
