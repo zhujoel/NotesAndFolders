@@ -3,6 +3,7 @@ package notesandfolders.presentation.component
 import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.navigation.NavHostController
 import androidx.wear.compose.material.Card
@@ -27,7 +28,8 @@ fun NoteCard(
         content = {
             Text (
                 note.content,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
+                fontWeight = FontWeight.Normal
             )
         },
         modifier = modifier
