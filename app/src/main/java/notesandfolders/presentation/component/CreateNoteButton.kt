@@ -9,8 +9,8 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -46,8 +46,8 @@ fun CreateNoteButton(
         it.data?.let { data ->
             val results: Bundle = RemoteInput.getResultsFromIntent(data)
             val newInputText: CharSequence? = results.getCharSequence(inputTextKey)
+            AppDatabase.getDatabase(context).noteDAO().insert(Note(UUID.randomUUID(), folderId, newInputText.toString(), Date()))
             Thread{
-                AppDatabase.getDatabase(context).noteDAO().insert(Note(UUID.randomUUID(), folderId, newInputText.toString(), Date()))
                 AppDatabase.getDatabase(context).folderDao().updateLastUpdated(folderId, Date())
             }.start()
         }
@@ -72,12 +72,11 @@ fun CreateNoteButton(
         content = {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxHeight())
+                modifier = Modifier.height(18.dp))
             {
                 Icon(
                     imageVector = ImageVector.vectorResource(R.drawable.note_add),
                     contentDescription = stringResource(R.string.create_note_button_description),
-                    modifier = Modifier.size(25.dp)
                 )
                 Spacer(modifier = Modifier.size(4.dp))
                 Text("New", fontWeight = FontWeight.Medium)
