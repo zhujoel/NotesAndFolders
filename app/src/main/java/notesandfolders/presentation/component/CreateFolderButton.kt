@@ -12,38 +12,33 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.compositeOver
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.Card
-import androidx.wear.compose.material.CardDefaults
 import androidx.wear.compose.material.Icon
-import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
 import androidx.wear.input.RemoteInputIntentHelper
 import com.example.notesandfolders.R
 import notesandfolders.entities.AppDatabase
 import notesandfolders.entities.Folder
 import notesandfolders.presentation.wearableExtender
-import java.sql.Timestamp
 import java.util.Date
 import java.util.UUID
 
 @Composable
 fun CreateFolderButton(
     context: Context,
-    folderId: UUID // Current folder ID,
+    folderId: UUID, // Current folder ID
+    backgroundPainter: Painter
 ) {
     var inputTextKey = "new-folder-button"
     val launcher = rememberLauncherForActivityResult(
@@ -89,11 +84,6 @@ fun CreateFolderButton(
         },
         modifier = Modifier.fillMaxWidth(0.5f),
         shape = RoundedCornerShape(10.dp),
-        backgroundPainter = CardDefaults.cardBackgroundPainter(
-            startBackgroundColor = Color.Yellow.copy(alpha = 0.30f).compositeOver(MaterialTheme.colors.background),
-            endBackgroundColor = MaterialTheme.colors.onSurfaceVariant.copy(alpha = 0.20f)
-                .compositeOver(MaterialTheme.colors.background),
-            gradientDirection = LocalLayoutDirection.current
-        )
+        backgroundPainter = backgroundPainter
     )
 }

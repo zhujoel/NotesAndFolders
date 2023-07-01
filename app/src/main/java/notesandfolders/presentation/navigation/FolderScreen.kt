@@ -11,10 +11,15 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.compositeOver
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.wear.compose.material.AutoCenteringParams
+import androidx.wear.compose.material.CardDefaults
+import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.PositionIndicator
 import androidx.wear.compose.material.Scaffold
 import androidx.wear.compose.material.ScalingLazyColumn
@@ -46,6 +51,11 @@ fun FolderScreen(
     var subFolders = AppDatabase.getDatabase(context).folderDao().getChildFolders(folderId).filter { folder -> folder.id != UUID(0L, 0L) }
     var notes = AppDatabase.getDatabase(context).noteDAO().getChildNotes(folderId)
     val listState = rememberScalingLazyListState()
+    var buttonBackgroundPainter = CardDefaults.cardBackgroundPainter(
+        startBackgroundColor = Color.Yellow.copy(alpha = 0.30f).compositeOver(MaterialTheme.colors.background),
+        endBackgroundColor = MaterialTheme.colors.onSurfaceVariant.copy(alpha = 0.20f)
+            .compositeOver(MaterialTheme.colors.background),
+        gradientDirection = LocalLayoutDirection.current)
 
     Scaffold(
         timeText = { TimeText(modifier = Modifier.scrollAway(listState)) },
@@ -100,19 +110,13 @@ fun FolderScreen(
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically,
                 ){
-                    CreateFolderButton(context, folderId)
+                    CreateFolderButton(context, folderId, buttonBackgroundPainter)
                     Spacer(modifier = Modifier.size(2.dp))
-                    CreateNoteButton(context, folderId)
+                    CreateNoteButton(context, folderId, buttonBackgroundPainter)
                 }
             }
             if (!isRootFolder) {
-                item {
-                    DeleteFolderButton(
-                        context,
-                        folder,
-                        swipeDismissibleNavController
-                    )
-                }
+                item { DeleteFolderButton(context, folder, swipeDismissibleNavController, buttonBackgroundPainter) }
             }
         }
     }

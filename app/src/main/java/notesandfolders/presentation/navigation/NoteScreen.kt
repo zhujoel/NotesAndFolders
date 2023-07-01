@@ -6,9 +6,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.compositeOver
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.wear.compose.material.CardDefaults
+import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.PositionIndicator
 import androidx.wear.compose.material.Scaffold
 import androidx.wear.compose.material.ScalingLazyColumn
@@ -32,6 +36,11 @@ fun NoteScreen(
 ) {
     var note = AppDatabase.getDatabase(context).noteDAO().get(noteId)
     val listState = rememberScalingLazyListState()
+    var buttonBackgroundPainter = CardDefaults.cardBackgroundPainter(
+        startBackgroundColor = Color.Yellow.copy(alpha = 0.30f).compositeOver(MaterialTheme.colors.background),
+        endBackgroundColor = MaterialTheme.colors.onSurfaceVariant.copy(alpha = 0.20f)
+            .compositeOver(MaterialTheme.colors.background),
+        gradientDirection = LocalLayoutDirection.current)
 
     Scaffold(
         timeText = { TimeText(modifier = Modifier.scrollAway(listState)) },
@@ -53,13 +62,7 @@ fun NoteScreen(
                     )
                 }
             }
-            item {
-                DeleteNoteButton(
-                    context,
-                    note,
-                    swipeDismissibleNavController
-                )
-            }
+            item { DeleteNoteButton(context, note, swipeDismissibleNavController, buttonBackgroundPainter) }
         }
     }
 }
