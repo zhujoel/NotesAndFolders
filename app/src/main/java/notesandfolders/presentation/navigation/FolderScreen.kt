@@ -99,7 +99,7 @@ fun FolderScreen(
                     contentAlignment = Alignment.BottomStart
                 ){
                     Text(
-                        text = "Edited " + SimpleDateFormat("dd/MM/yyyy").format(folder.lastUpdated),
+                        text = "Edited " + SimpleDateFormat("dd/MM/yyyy HH:mm").format(folder.lastUpdated),
                         fontSize = 12.sp
                     )
                 }

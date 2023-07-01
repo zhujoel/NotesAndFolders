@@ -22,6 +22,6 @@ interface FolderDAO{
     @Delete
     fun delete(folder: Folder)
 
-    @Query("UPDATE folder SET last_updated = :lastUpdated WHERE parent_folder_id = :parentFolderId")
-    fun updateLastUpdated(parentFolderId: UUID, lastUpdated: Date)
+    @Query("UPDATE folder SET last_updated = :lastUpdated WHERE id = :folderId")
+    fun updateLastUpdated(folderId: UUID, lastUpdated: Date)
 }

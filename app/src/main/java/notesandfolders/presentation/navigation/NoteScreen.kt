@@ -57,7 +57,7 @@ fun NoteScreen(
                     contentAlignment = Alignment.BottomStart
                 ){
                     Text(
-                        text = "Created " + SimpleDateFormat("dd/MM/yyyy").format(note.createdAt),
+                        text = "Created " + SimpleDateFormat("dd/MM/yyyy HH:mm").format(note.createdAt),
                         fontSize = 12.sp
                     )
                 }
