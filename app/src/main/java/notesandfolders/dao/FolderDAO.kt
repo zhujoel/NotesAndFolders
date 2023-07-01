@@ -4,7 +4,9 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import notesandfolders.entities.Folder
+import java.util.Date
 import java.util.UUID
 
 @Dao
@@ -20,4 +22,7 @@ interface FolderDAO{
 
     @Delete
     fun delete(folder: Folder)
+
+    @Query("UPDATE folder SET last_updated = :lastUpdated WHERE parent_folder_id = :parentFolderId")
+    fun updateLastUpdated(parentFolderId: UUID, lastUpdated: Date)
 }

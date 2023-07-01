@@ -2,14 +2,17 @@ package notesandfolders.presentation.navigation
 
 import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.wear.compose.material.AutoCenteringParams
 import androidx.wear.compose.material.PositionIndicator
@@ -27,6 +30,7 @@ import notesandfolders.presentation.component.CreateNoteButton
 import notesandfolders.presentation.component.DeleteFolderButton
 import notesandfolders.presentation.component.FolderCard
 import notesandfolders.presentation.component.NoteCard
+import java.text.SimpleDateFormat
 import java.util.UUID
 
 @Composable
@@ -79,6 +83,17 @@ fun FolderScreen(
                         swipeDismissibleNavController
                     )
                 })
+            item {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.BottomStart
+                ){
+                    Text(
+                        text = "Edited " + SimpleDateFormat("dd/MM/yyyy").format(folder.lastUpdated),
+                        fontSize = 12.sp
+                    )
+                }
+            }
             item {
                 Row (
                     modifier = Modifier.fillMaxWidth(),

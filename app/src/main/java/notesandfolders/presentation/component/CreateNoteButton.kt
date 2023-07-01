@@ -17,13 +17,19 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.Card
+import androidx.wear.compose.material.CardDefaults
 import androidx.wear.compose.material.Icon
+import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
 import androidx.wear.input.RemoteInputIntentHelper
 import com.example.notesandfolders.R
@@ -45,7 +51,8 @@ fun CreateNoteButton(
             val results: Bundle = RemoteInput.getResultsFromIntent(data)
             val newInputText: CharSequence? = results.getCharSequence(inputTextKey)
             Thread{
-                AppDatabase.getDatabase(context).noteDAO().insert(Note(UUID.randomUUID(), folderId, newInputText.toString()))
+                AppDatabase.getDatabase(context).noteDAO().insert(Note(UUID.randomUUID(), folderId, newInputText.toString(), Date()))
+                AppDatabase.getDatabase(context).folderDao().updateLastUpdated(folderId, Date())
             }.start()
         }
     }
@@ -80,9 +87,13 @@ fun CreateNoteButton(
                 Text("New", fontWeight = FontWeight.Medium)
             }
         },
-        modifier = Modifier
-            .fillMaxWidth(1f)
-            .height(50.dp),
-        shape = RoundedCornerShape(10.dp)
+        modifier = Modifier.fillMaxWidth(1f),
+        shape = RoundedCornerShape(10.dp),
+        backgroundPainter = CardDefaults.cardBackgroundPainter(
+            startBackgroundColor = Color.Yellow.copy(alpha = 0.30f).compositeOver(MaterialTheme.colors.background),
+            endBackgroundColor = MaterialTheme.colors.onSurfaceVariant.copy(alpha = 0.20f)
+                .compositeOver(MaterialTheme.colors.background),
+            gradientDirection = LocalLayoutDirection.current
+        )
     )
 }

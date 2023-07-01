@@ -30,6 +30,6 @@ fun NoteCard(
                 overflow = TextOverflow.Ellipsis
             )
         },
-        modifier = modifier,
+        modifier = modifier
     )
 }
