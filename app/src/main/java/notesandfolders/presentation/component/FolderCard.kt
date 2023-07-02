@@ -10,12 +10,15 @@ import androidx.compose.material.icons.filled.Folder
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.wear.compose.material.Card
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.Text
+import com.example.notesandfolders.R
 import notesandfolders.entities.AppDatabase
 import notesandfolders.presentation.navigation.Screen
 import java.util.UUID
@@ -42,7 +45,7 @@ fun FolderCard(
             modifier = Modifier.fillMaxHeight()
         ) {
             Icon(
-                imageVector = Icons.Filled.Folder,
+                imageVector = ImageVector.vectorResource(R.drawable.folder),
                 contentDescription = "",
                 modifier = iconModifier)
             Spacer(modifier = Modifier.size(6.dp))

@@ -73,6 +73,9 @@ dependencies {
     // RxJava3 support for Room
     implementation "androidx.room:room-rxjava3:$room_version"
 
+    // Splash Screen
+    implementation "androidx.core:core-splashscreen:1.0.1"
+
     // Testing
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test.ext:junit:$androidx_test_ext_junit_version"
