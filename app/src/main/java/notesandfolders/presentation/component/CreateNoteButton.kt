@@ -26,7 +26,7 @@ import androidx.wear.compose.material.Card
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.Text
 import androidx.wear.input.RemoteInputIntentHelper
-import com.example.notesandfolders.R
+import com.zdxu.notesandfolders.R
 import notesandfolders.entities.AppDatabase
 import notesandfolders.entities.Note
 import notesandfolders.presentation.wearableExtender

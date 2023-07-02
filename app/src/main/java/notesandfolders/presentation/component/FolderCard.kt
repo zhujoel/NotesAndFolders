@@ -18,7 +18,7 @@ import androidx.navigation.NavHostController
 import androidx.wear.compose.material.Card
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.Text
-import com.example.notesandfolders.R
+import com.zdxu.notesandfolders.R
 import notesandfolders.entities.AppDatabase
 import notesandfolders.presentation.navigation.Screen
 import java.util.UUID

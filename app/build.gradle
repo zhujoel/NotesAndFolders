@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.notesandfolders'
+    namespace 'com.zdxu.notesandfolders'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.notesandfolders"
+        applicationId "com.zdxu.notesandfolders"
         minSdk 30
         targetSdk 33
         versionCode 1
